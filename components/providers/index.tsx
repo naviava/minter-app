@@ -1,4 +1,5 @@
 "use client";
+import { ThemeProvider } from "./theme-provider";
 import { TRPCProvider } from "./trpc-provider";
 
 interface IProps {
@@ -6,5 +7,16 @@ interface IProps {
 }
 
 export function Providers({ children }: IProps) {
-  return <TRPCProvider>{children}</TRPCProvider>;
+  return (
+    <TRPCProvider>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="dark"
+        enableSystem
+        disableTransitionOnChange
+      >
+        {children}
+      </ThemeProvider>
+    </TRPCProvider>
+  );
 }

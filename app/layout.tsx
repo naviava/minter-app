@@ -1,7 +1,9 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+
 import { getServerSession } from "next-auth";
+import { Providers } from "~/components/providers";
 import SessionProvider from "~/components/providers/session-provider";
 
 const font = Inter({ subsets: ["latin"] });
@@ -24,7 +26,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-        <SessionProvider session={session}>{children}</SessionProvider>
+        <SessionProvider session={session}>
+          <Providers>{children}</Providers>
+        </SessionProvider>
       </body>
     </html>
   );
