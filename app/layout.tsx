@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     template: "%s | Minter App",
   },
   description: "An NFT minter app created for Abstraction Hackathon.",
+  icons: [{ url: "/logo.svg", href: "/logo.svg" }],
 };
 
 export default async function RootLayout({

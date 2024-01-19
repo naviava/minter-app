@@ -3,6 +3,7 @@
 import { MintbaseWalletContextProvider } from "@mintbase-js/react";
 import { ThemeProvider } from "./theme-provider";
 import { TRPCProvider } from "./trpc-provider";
+import { WalletContextProvider } from "./wallet-context-provider";
 
 const MintbaseWalletSetup = {
   contractAddress: "hellovirtualworld.mintspace2.testnet",
@@ -16,7 +17,7 @@ interface IProps {
 
 export function Providers({ children }: IProps) {
   return (
-    <MintbaseWalletContextProvider {...MintbaseWalletSetup}>
+    <WalletContextProvider>
       <TRPCProvider>
         <ThemeProvider
           attribute="class"
@@ -27,6 +28,6 @@ export function Providers({ children }: IProps) {
           {children}
         </ThemeProvider>
       </TRPCProvider>
-    </MintbaseWalletContextProvider>
+    </WalletContextProvider>
   );
 }

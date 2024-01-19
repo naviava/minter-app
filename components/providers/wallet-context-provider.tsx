@@ -13,7 +13,7 @@ const MintbaseWalletSetup = {
   callbackUrl: "http://localhost:3000",
 };
 
-export default function App({ children }: IProps) {
+export function WalletContextProvider({ children }: IProps) {
   return (
     <MintbaseWalletContextProvider {...MintbaseWalletSetup}>
       {children}

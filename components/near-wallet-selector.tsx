@@ -7,7 +7,6 @@ export const NearWalletConnector = () => {
 
   const handleSignout = async () => {
     const wallet = await selector.wallet();
-    console.log(await wallet.getAccounts());
     return wallet.signOut();
   };
 
