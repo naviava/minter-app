@@ -2,9 +2,10 @@
 
 import { useAuthModal } from "~/store/use-auth-modal";
 import { Button } from "~/components/ui/button";
+import { UserAvatar } from "~/components/user-avatar";
 import { trpc } from "~/app/_trpc/client";
 
-export function AuthActions() {
+export function AuthTrigger() {
   const { onOpen } = useAuthModal();
   const { data: user } = trpc.user.getAuthProfile.useQuery();
 
@@ -15,6 +16,7 @@ export function AuthActions() {
           Sign in
         </Button>
       )}
+      {!!user && <UserAvatar userName={user.name} imageUrl={user.image} />}
     </div>
   );
 }

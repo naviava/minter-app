@@ -1,6 +1,6 @@
 import { Logo } from "~/components/logo";
 import { ThemeSwitch } from "~/components/navbar/theme-switch";
-import { AuthActions } from "~/components/navbar/auth-actions";
+import { AuthTrigger } from "~/components/navbar/auth-trigger";
 
 export function Navbar() {
   return (
@@ -8,7 +8,7 @@ export function Navbar() {
       <Logo />
       <div className="flex items-center gap-x-6">
         <ThemeSwitch />
-        <AuthActions />
+        <AuthTrigger />
       </div>
     </nav>
   );
