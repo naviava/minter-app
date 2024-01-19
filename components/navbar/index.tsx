@@ -1,9 +1,6 @@
 import { Logo } from "~/components/logo";
-import { Button } from "~/components/ui/button";
-import { ThemeSwitch } from "~/components/theme-switch";
-
-import { serverClient } from "~/app/_trpc/server-client";
-import { AuthActions } from "./auth-actions";
+import { ThemeSwitch } from "~/components/navbar/theme-switch";
+import { AuthActions } from "~/components/navbar/auth-actions";
 
 export function Navbar() {
   return (

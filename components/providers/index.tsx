@@ -4,6 +4,7 @@ import { MintbaseWalletContextProvider } from "@mintbase-js/react";
 import { ThemeProvider } from "./theme-provider";
 import { TRPCProvider } from "./trpc-provider";
 import { WalletContextProvider } from "./wallet-context-provider";
+import { ModalProvider } from "./modal-provider";
 
 const MintbaseWalletSetup = {
   contractAddress: "hellovirtualworld.mintspace2.testnet",
@@ -24,6 +25,7 @@ export function Providers({ children }: IProps) {
           defaultTheme="dark"
           disableTransitionOnChange
         >
+          <ModalProvider />
           {children}
         </ThemeProvider>
       </TRPCProvider>

@@ -1,4 +1,4 @@
-import { AuthModal } from "../modals/auth-modal";
+import { AuthModal } from "~/components/modals/auth-modal";
 
 export function ModalProvider() {
   return (

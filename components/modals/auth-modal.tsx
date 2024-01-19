@@ -1,6 +1,8 @@
 "use client";
 
-import { Button } from "~/components/ui/button";
+import { useAuthModal } from "~/store/use-auth-modal";
+import { useIsMounted } from "~/hooks/use-is-mounted";
+
 import {
   Dialog,
   DialogContent,
@@ -8,12 +10,16 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "~/components/ui/dialog";
+import { Button } from "~/components/ui/button";
 
 export function AuthModal() {
+  const isMounted = useIsMounted();
+  const { isOpen, onClose } = useAuthModal();
+
+  if (!isMounted) return null;
   return (
-    <Dialog open>
+    <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
