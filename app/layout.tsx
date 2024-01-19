@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import { getServerSession } from "next-auth";
+import "@near-wallet-selector/modal-ui/styles.css";
+
 import { Providers } from "~/components/providers";
 import SessionProvider from "~/components/providers/session-provider";
 
