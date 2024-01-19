@@ -22,7 +22,6 @@ export function Providers({ children }: IProps) {
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
-          enableSystem
           disableTransitionOnChange
         >
           {children}
