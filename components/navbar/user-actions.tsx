@@ -1,3 +1,11 @@
+"use client";
+
+import { useCallback, useEffect } from "react";
+
+import { toast } from "sonner";
+import { signOut } from "next-auth/react";
+import { useMbWallet } from "@mintbase-js/react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,9 +15,6 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { trpc } from "~/app/_trpc/client";
-import { signOut } from "next-auth/react";
-import { useCallback } from "react";
-import { useMbWallet } from "@mintbase-js/react";
 
 interface IProps {
   children: React.ReactNode;
@@ -21,13 +26,24 @@ export function UserActions({ children }: IProps) {
 
   const handleConnectWallet = useCallback(async () => {
     await connect();
-    console.log(activeAccountId);
-  }, [connect, activeAccountId]);
+  }, [connect]);
 
   const handleDisconnectWallet = useCallback(async () => {
     const wallet = await selector.wallet();
-    return wallet.signOut();
+    await wallet.signOut();
+    return toast.success("Wallet disconnected");
   }, [selector]);
+
+  const { mutate: handleLinkWallet } = trpc.user.linkWallet.useMutation({
+    onError: ({ message }) => toast.error(message),
+    onSuccess: () => toast.success("Wallet connected"),
+  });
+
+  useEffect(() => {
+    if (isConnected && activeAccountId) {
+      handleLinkWallet(activeAccountId);
+    }
+  }, [handleLinkWallet, isConnected, activeAccountId]);
 
   if (!user) return null;
   return (
@@ -49,18 +65,17 @@ export function UserActions({ children }: IProps) {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {!isConnected && (
-          <DropdownMenuItem onClick={handleConnectWallet}>
-            Connect Wallet
-          </DropdownMenuItem>
-        )}
         <DropdownMenuItem>Billing</DropdownMenuItem>
         <DropdownMenuItem>Team</DropdownMenuItem>
         <DropdownMenuItem>Subscription</DropdownMenuItem>
         <DropdownMenuSeparator />
-        {isConnected && (
+        {isConnected ? (
           <DropdownMenuItem onClick={handleDisconnectWallet}>
             Disconnect Wallet
+          </DropdownMenuItem>
+        ) : (
+          <DropdownMenuItem onClick={handleConnectWallet}>
+            Connect Wallet
           </DropdownMenuItem>
         )}
         <DropdownMenuItem onClick={() => signOut()}>Sign out</DropdownMenuItem>

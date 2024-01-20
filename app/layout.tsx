@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import { getServerSession } from "next-auth";
 import "@near-wallet-selector/modal-ui/styles.css";
 
+import { Toaster } from "~/components/ui/sonner";
 import { Providers } from "~/components/providers";
 import SessionProvider from "~/components/providers/session-provider";
 
@@ -31,6 +32,7 @@ export default async function RootLayout({
       <body className={font.className}>
         <SessionProvider session={session}>
           <Providers>{children}</Providers>
+          <Toaster position="top-center" />
         </SessionProvider>
       </body>
     </html>
