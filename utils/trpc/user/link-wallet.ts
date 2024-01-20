@@ -26,7 +26,7 @@ export const linkWallet = privateProcedure
       });
     }
     if (!!existingWallet && existingWallet.userId === user.id) {
-      return existingWallet;
+      return { isNew: false, wallet: existingWallet };
     }
 
     const newWallet = await db.wallet.create({
@@ -35,5 +35,5 @@ export const linkWallet = privateProcedure
         userId: user.id,
       },
     });
-    return newWallet;
+    return { isNew: true, wallet: newWallet };
   });

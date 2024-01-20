@@ -24,26 +24,34 @@ export function UserActions({ children }: IProps) {
   const { data: user } = trpc.user.getAuthProfile.useQuery();
   const { isConnected, selector, connect, activeAccountId } = useMbWallet();
 
+  const { mutate: handleLinkWallet } = trpc.user.linkWallet.useMutation({
+    onError: async ({ message }) => {
+      toast.error(message);
+      const wallet = await selector.wallet();
+      wallet.signOut();
+    },
+    onSuccess: (data) => {
+      if (data.isNew) {
+        toast.success("Wallet Added: " + activeAccountId);
+      }
+    },
+  });
+
   const handleConnectWallet = useCallback(async () => {
     await connect();
   }, [connect]);
 
   const handleDisconnectWallet = useCallback(async () => {
     const wallet = await selector.wallet();
-    await wallet.signOut();
+    wallet.signOut();
     return toast.success("Wallet disconnected");
   }, [selector]);
-
-  const { mutate: handleLinkWallet } = trpc.user.linkWallet.useMutation({
-    onError: ({ message }) => toast.error(message),
-    onSuccess: () => toast.success("Wallet connected"),
-  });
 
   useEffect(() => {
     if (isConnected && activeAccountId) {
       handleLinkWallet(activeAccountId);
     }
-  }, [handleLinkWallet, isConnected, activeAccountId]);
+  }, [isConnected, activeAccountId, handleLinkWallet]);
 
   if (!user) return null;
   return (
@@ -65,7 +73,7 @@ export function UserActions({ children }: IProps) {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Billing</DropdownMenuItem>
+        <DropdownMenuItem>Account</DropdownMenuItem>
         <DropdownMenuItem>Team</DropdownMenuItem>
         <DropdownMenuItem>Subscription</DropdownMenuItem>
         <DropdownMenuSeparator />
