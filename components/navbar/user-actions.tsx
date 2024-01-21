@@ -47,6 +47,12 @@ export function UserActions({ children }: IProps) {
     return toast.success("Wallet disconnected");
   }, [selector]);
 
+  const handleSignOut = useCallback(async () => {
+    const wallet = await selector.wallet();
+    wallet.signOut();
+    signOut();
+  }, []);
+
   useEffect(() => {
     if (isConnected && activeAccountId) {
       handleLinkWallet(activeAccountId);
@@ -86,7 +92,7 @@ export function UserActions({ children }: IProps) {
             Connect Wallet
           </DropdownMenuItem>
         )}
-        <DropdownMenuItem onClick={() => signOut()}>Sign out</DropdownMenuItem>
+        <DropdownMenuItem onClick={handleSignOut}>Sign out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
