@@ -51,7 +51,7 @@ export function UserActions({ children }: IProps) {
     const wallet = await selector.wallet();
     wallet.signOut();
     signOut();
-  }, []);
+  }, [selector]);
 
   useEffect(() => {
     if (isConnected && activeAccountId) {
