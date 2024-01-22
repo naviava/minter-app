@@ -6,9 +6,9 @@ interface IProps {
 
 export default function LandingLayout({ children }: IProps) {
   return (
-    <>
+    <main className="flex h-full flex-col">
       <Navbar />
       {children}
-    </>
+    </main>
   );
 }

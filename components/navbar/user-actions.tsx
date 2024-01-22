@@ -15,12 +15,15 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { trpc } from "~/app/_trpc/client";
+import { usePathname, useRouter } from "next/navigation";
 
 interface IProps {
   children: React.ReactNode;
 }
 
 export function UserActions({ children }: IProps) {
+  const router = useRouter();
+
   const { data: user } = trpc.user.getAuthProfile.useQuery();
   const { isConnected, selector, connect, activeAccountId } = useMbWallet();
 
@@ -48,10 +51,13 @@ export function UserActions({ children }: IProps) {
   }, [selector]);
 
   const handleSignOut = useCallback(async () => {
-    const wallet = await selector.wallet();
-    wallet.signOut();
+    if (isConnected) {
+      const wallet = await selector.wallet();
+      wallet.signOut();
+    }
     signOut();
-  }, [selector]);
+    router.push("/");
+  }, [selector, router, isConnected]);
 
   useEffect(() => {
     if (isConnected && activeAccountId) {
