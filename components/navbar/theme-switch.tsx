@@ -25,7 +25,7 @@ export function ThemeSwitch() {
     return (
       <div className="flex items-center gap-x-2">
         <Skeleton className="h-5 w-5 rounded-full" />
-        <Skeleton className="h-[26px] w-12 rounded-full" />
+        <Skeleton className="h-6 w-11 rounded-full" />
         <Skeleton className="h-5 w-5 rounded-full" />
       </div>
     );
@@ -33,14 +33,15 @@ export function ThemeSwitch() {
 
   return (
     <div className="flex items-center gap-x-2">
-      <Sun className="h-5 w-5" />
+      <Sun className="h-5 w-5 text-red-600" />
       <Switch
         checked={defaultChecked}
         defaultChecked={defaultChecked}
         onCheckedChange={toggleTheme}
-        className="data-[state=unchecked]:bg-primary"
+        thumbClasses="bg-white"
+        className="data-[state=checked]:bg-indigo-600 data-[state=unchecked]:bg-red-600"
       />
-      <Moon className="h-5 w-5" />
+      <Moon className="h-5 w-5 text-indigo-600" />
     </div>
   );
 }
