@@ -4,7 +4,7 @@ import { AuthTrigger } from "~/components/navbar/auth-trigger";
 
 export function Navbar() {
   return (
-    <nav className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-2">
+    <nav className="mx-auto flex h-16 w-full max-w-7xl shrink-0 items-center justify-between px-4">
       <Logo />
       <div className="flex items-center gap-x-6">
         <ThemeSwitch />
