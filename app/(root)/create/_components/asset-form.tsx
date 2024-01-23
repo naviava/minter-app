@@ -13,23 +13,32 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+import { Button } from "~/components/ui/button";
+import { Textarea } from "~/components/ui/textarea";
 
 import { cn } from "~/lib/utils";
-import { Textarea } from "~/components/ui/textarea";
-import { Button } from "~/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogHeader,
+  AlertDialogTrigger,
+} from "~/components/ui/alert-dialog";
+import { AlertDialogContent } from "@radix-ui/react-alert-dialog";
 
 const MAX_TITLE_LENGTH = 100;
 const MAX_DESCRIPTION_LENGTH = 5000;
+const ERROR_CLASSES = "text-red-600 dark:text-red-400";
 
 const formSchema = z.object({
   title: z
     .string()
     .min(1, { message: "Title cannot be empty" })
-    .max(100, { message: "Title cannot be longer than 100 characters" }),
+    .max(MAX_TITLE_LENGTH, {
+      message: "Title cannot be longer than 100 characters",
+    }),
   description: z
     .string()
     .min(100, { message: "Description must be at least 100 characters" })
-    .max(5000, {
+    .max(MAX_DESCRIPTION_LENGTH, {
       message: "Description cannot be longer than 5000 characters",
     }),
 });
@@ -47,10 +56,13 @@ export function AssetForm({ file }: IProps) {
     },
   });
 
-  const title = useMemo(() => form.watch("title"), [form]);
-  const titleChars = useMemo(() => title.length, [title]);
-  const description = useMemo(() => form.watch("description"), [form]);
-  const descriptionChars = useMemo(() => description.length, [description]);
+  const title = form.watch("title");
+  const description = form.watch("description");
+  const titleChars = useMemo(() => title.length, [title.length]);
+  const descriptionChars = useMemo(
+    () => description.length,
+    [description.length],
+  );
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
@@ -69,8 +81,7 @@ export function AssetForm({ file }: IProps) {
                   <p className="text-lg font-medium">Title</p>
                   <p
                     className={cn(
-                      titleChars > MAX_TITLE_LENGTH &&
-                        "text-red-600 dark:text-red-400",
+                      titleChars > MAX_TITLE_LENGTH && ERROR_CLASSES,
                     )}
                   >{`${titleChars} / ${MAX_TITLE_LENGTH}`}</p>
                 </div>
@@ -93,7 +104,7 @@ export function AssetForm({ file }: IProps) {
                   <p
                     className={cn(
                       descriptionChars > MAX_DESCRIPTION_LENGTH &&
-                        "text-red-600 dark:text-red-400",
+                        ERROR_CLASSES,
                     )}
                   >{`${descriptionChars} / ${MAX_DESCRIPTION_LENGTH}`}</p>
                 </div>
