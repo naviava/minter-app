@@ -43,7 +43,8 @@ export function ImageDropzone({ file, setFile }: IProps) {
       {...getRootProps()}
       className={cn(
         "mx-auto flex aspect-square w-[250px] cursor-pointer items-center justify-center rounded-lg",
-        !file && "border-2 border-dashed border-muted-foreground",
+        (!file || isDragActive) &&
+          "border-2 border-dashed border-muted-foreground",
       )}
     >
       <input {...getInputProps()} multiple={false} />
@@ -60,7 +61,7 @@ export function ImageDropzone({ file, setFile }: IProps) {
             </div>
           ) : (
             <div className="relative">
-              <div className="h-[250px] w-[250px]">
+              <div className="relative h-[250px] w-[250px]">
                 <Image
                   fill
                   src={URL.createObjectURL(file)}
