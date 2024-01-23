@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useUploadModal } from "~/store/use-upload-modal";
 
 import {
   Form,
@@ -17,6 +18,7 @@ import { Button } from "~/components/ui/button";
 import { Textarea } from "~/components/ui/textarea";
 
 import { cn } from "~/lib/utils";
+import { toast } from "sonner";
 
 const MAX_TITLE_LENGTH = 100;
 const MAX_DESCRIPTION_LENGTH = 5000;
@@ -38,6 +40,8 @@ const formSchema = z.object({
 });
 
 export function AssetForm() {
+  const { media, onOpen } = useUploadModal();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -55,7 +59,11 @@ export function AssetForm() {
   );
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    if (!media) {
+      toast.error("Please select an image file to upload");
+      return;
+    }
+    onOpen({ ...values, media });
   }
 
   return (
@@ -65,7 +73,7 @@ export function AssetForm() {
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormItem className="mx-auto max-w-xl">
+            <FormItem>
               <FormLabel>
                 <div className="flex items-center justify-between">
                   <p className="text-lg font-medium">Title</p>
@@ -87,7 +95,7 @@ export function AssetForm() {
           control={form.control}
           name="description"
           render={({ field }) => (
-            <FormItem className="mx-auto max-w-xl">
+            <FormItem>
               <FormLabel>
                 <div className="flex items-center justify-between">
                   <p className="text-lg font-medium">Description of event</p>
@@ -100,7 +108,11 @@ export function AssetForm() {
                 </div>
               </FormLabel>
               <FormControl>
-                <Textarea {...field} rows={20} />
+                <Textarea
+                  {...field}
+                  rows={20}
+                  placeholder="Describe this historical event..."
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -108,7 +120,7 @@ export function AssetForm() {
         />
         <div className="mx-auto max-w-xl">
           <Button type="submit" variant="theme" className="w-full">
-            Add to Blockchain (irreversible)
+            Add to Blockchain
           </Button>
         </div>
       </form>

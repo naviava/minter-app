@@ -16,7 +16,7 @@ export default function CreatePage() {
 
   if (!isConnected) return null;
   return (
-    <PageWrapper>
+    <PageWrapper className="mx-auto max-w-xl">
       <div className="flex items-start justify-between">
         <PageHeading label="Create" tagline="Teach some history" />
         <Button variant="link" size="sm" onClick={() => router.back()}>
