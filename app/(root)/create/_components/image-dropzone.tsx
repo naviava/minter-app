@@ -5,21 +5,19 @@ import Image from "next/image";
 
 import { useDropzone } from "react-dropzone";
 import { ImageIcon, Trash2 } from "lucide-react";
+import { useUploadModal } from "~/store/use-upload-modal";
 
 import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 
-interface IProps {
-  file: File | null;
-  setFile: React.Dispatch<React.SetStateAction<File | null>>;
-}
+export function ImageDropzone() {
+  const { media, setMedia, clearMedia } = useUploadModal();
 
-export function ImageDropzone({ file, setFile }: IProps) {
   const onDrop = useCallback(
     (acceptedFile: any) => {
-      setFile(acceptedFile[0]);
+      setMedia(acceptedFile[0]);
     },
-    [setFile],
+    [setMedia],
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -33,9 +31,9 @@ export function ImageDropzone({ file, setFile }: IProps) {
   const handleDelete = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation();
-      setFile(null);
+      clearMedia();
     },
-    [setFile],
+    [clearMedia],
   );
 
   return (
@@ -43,7 +41,7 @@ export function ImageDropzone({ file, setFile }: IProps) {
       {...getRootProps()}
       className={cn(
         "mx-auto flex aspect-square w-[250px] cursor-pointer items-center justify-center rounded-lg",
-        (!file || isDragActive) &&
+        (!media || isDragActive) &&
           "border-2 border-dashed border-muted-foreground",
       )}
     >
@@ -52,7 +50,7 @@ export function ImageDropzone({ file, setFile }: IProps) {
         <p className="text-center">Drop here...</p>
       ) : (
         <>
-          {!file ? (
+          {!media ? (
             <div className="flex flex-col items-center justify-center space-y-4 text-muted-foreground">
               <ImageIcon className="h-8 w-8" />
               <p className="max-w-[75%] text-balance text-center">
@@ -64,7 +62,7 @@ export function ImageDropzone({ file, setFile }: IProps) {
               <div className="relative h-[250px] w-[250px]">
                 <Image
                   fill
-                  src={URL.createObjectURL(file)}
+                  src={URL.createObjectURL(media)}
                   alt="New file"
                   className="rounded-lg object-cover"
                 />

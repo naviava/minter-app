@@ -17,12 +17,6 @@ import { Button } from "~/components/ui/button";
 import { Textarea } from "~/components/ui/textarea";
 
 import { cn } from "~/lib/utils";
-import {
-  AlertDialog,
-  AlertDialogHeader,
-  AlertDialogTrigger,
-} from "~/components/ui/alert-dialog";
-import { AlertDialogContent } from "@radix-ui/react-alert-dialog";
 
 const MAX_TITLE_LENGTH = 100;
 const MAX_DESCRIPTION_LENGTH = 5000;
@@ -43,11 +37,7 @@ const formSchema = z.object({
     }),
 });
 
-interface IProps {
-  file: File | null;
-}
-
-export function AssetForm({ file }: IProps) {
+export function AssetForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
