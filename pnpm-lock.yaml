@@ -11,6 +11,12 @@ dependencies:
   '@mintbase-js/react':
     specifier: 0.5.1-beta.3
     version: 0.5.1-beta.3(borsh@0.7.0)(near-api-js@2.1.4)
+  '@mintbase-js/sdk':
+    specifier: 0.5.1-beta.4
+    version: 0.5.1-beta.4
+  '@mintbase-js/storage':
+    specifier: 0.5.1-beta.4
+    version: 0.5.1-beta.4
   '@near-wallet-selector/modal-ui':
     specifier: ^8.7.1
     version: 8.9.2(near-api-js@2.1.4)
@@ -68,6 +74,9 @@ dependencies:
   react-dom:
     specifier: ^18
     version: 18.2.0(react@18.2.0)
+  react-dropzone:
+    specifier: ^14.2.3
+    version: 14.2.3(react@18.2.0)
   react-icons:
     specifier: ^5.0.1
     version: 5.0.1(react@18.2.0)
@@ -332,6 +341,33 @@ packages:
       - borsh
       - encoding
       - near-api-js
+    dev: false
+
+  /@mintbase-js/sdk@0.5.0-v0.5.1-beta.1-20ccd71.0:
+    resolution: {integrity: sha512-jw0F5qkfjVxtYF/iVQ3kkJTDOaDM29ZTzF1MDxCheIyYfiOotdFeUTO7QXnfiIOmEMRKCFO4HSgYLm7Uj2TGVw==}
+    dependencies:
+      bn.js: 5.2.1
+      near-api-js: 2.1.4
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
+  /@mintbase-js/sdk@0.5.1-beta.4:
+    resolution: {integrity: sha512-xQkvVbcrmbmVWQpMyAFQ6RXjDNEWBOEinPxYL0RceoiThIQR6MkliiFMcovRL80DrZYbU6Pwknspk/KK22hHNA==}
+    dependencies:
+      bn.js: 5.2.1
+      near-api-js: 2.1.4
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
+  /@mintbase-js/storage@0.5.1-beta.4:
+    resolution: {integrity: sha512-PYZJ8pnJr9qQHSq8CFUKcWvVImhwWn3qi5WseLDmXim1kFs4Zu6Gh8tGSoBhYAZqeWQuw2r7Cw9dkDjVzjFqKw==}
+    dependencies:
+      '@mintbase-js/sdk': 0.5.0-v0.5.1-beta.1-20ccd71.0
+      near-api-js: 2.1.4
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@mintbase-js/wallet@0.5.0-beta.4:
@@ -1603,6 +1639,11 @@ packages:
       has-symbols: 1.0.3
     dev: true
 
+  /attr-accept@2.2.2:
+    resolution: {integrity: sha512-7prDjvt9HmqiZ0cl5CRjtS84sEyhsHP2coDkaZKRKVfCDo9s7iw7ChVmar78Gu9pC4SoR/28wFu/G5JJhTnqEg==}
+    engines: {node: '>=4'}
+    dev: false
+
   /autoprefixer@10.4.17(postcss@8.4.33):
     resolution: {integrity: sha512-/cpVNRLSfhOtcGflT13P2794gVSgmPgTR+erw5ifnMLZb0UnSlkK4tquLmkd3BhA+nLo5tX8Cu0upUsGKvKbmg==}
     engines: {node: ^10 || ^12 || >=14}
@@ -2390,6 +2431,13 @@ packages:
     dependencies:
       flat-cache: 3.2.0
     dev: true
+
+  /file-selector@0.6.0:
+    resolution: {integrity: sha512-QlZ5yJC0VxHxQQsQhXvBaC7VRJ2uaxTf+Tfpu4Z/OcVQJVpZO+DGU0rkoVW5ce2SccxugvpBJoMvUs59iILYdw==}
+    engines: {node: '>= 12'}
+    dependencies:
+      tslib: 2.6.2
+    dev: false
 
   /fill-range@7.0.1:
     resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
@@ -3585,7 +3633,6 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       react-is: 16.13.1
-    dev: true
 
   /punycode@2.3.1:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
@@ -3625,6 +3672,18 @@ packages:
       scheduler: 0.23.0
     dev: false
 
+  /react-dropzone@14.2.3(react@18.2.0):
+    resolution: {integrity: sha512-O3om8I+PkFKbxCukfIR3QAGftYXDZfOE2N1mr/7qebQJHs7U+/RSL/9xomJNpRg9kM5h9soQSdf0Gc7OHF5Fug==}
+    engines: {node: '>= 10.13'}
+    peerDependencies:
+      react: '>= 16.8 || 18.0.0'
+    dependencies:
+      attr-accept: 2.2.2
+      file-selector: 0.6.0
+      prop-types: 15.8.1
+      react: 18.2.0
+    dev: false
+
   /react-icons@5.0.1(react@18.2.0):
     resolution: {integrity: sha512-WqLZJ4bLzlhmsvme6iFdgO8gfZP17rfjYEJ2m9RsZjZ+cc4k1hTzknEz63YS1MeT50kVzoa1Nz36f4BEx+Wigw==}
     peerDependencies:
@@ -3635,7 +3694,6 @@ packages:
 
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
-    dev: true
 
   /react-remove-scroll-bar@2.3.4(@types/react@18.2.48)(react@18.2.0):
     resolution: {integrity: sha512-63C4YQBUt0m6ALadE9XV56hV8BgJWDmmTPY758iIJjfQKt2nYwoUrPk0LXRXcB/yIj82T1/Ixfdpdk68LwIB0A==}

@@ -37,9 +37,10 @@ export default function LandingPage() {
         </span>
       </h1>
       <Button
+        variant="theme"
         disabled={isLoading || isRouting}
         onClick={handleClick}
-        className="bg-gradient-to-r from-red-600 to-indigo-600 p-6 text-xl text-white transition duration-300 hover:scale-105 active:scale-100 md:p-8 md:text-2xl"
+        className="p-6 text-xl transition duration-300 hover:scale-105 active:scale-100 md:p-8 md:text-2xl"
       >
         Get Started
         {isLoading || isRouting ? (
