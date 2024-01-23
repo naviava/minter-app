@@ -3,6 +3,7 @@
 import { useCallback } from "react";
 import Image from "next/image";
 
+import { uploadReference } from "@mintbase-js/storage";
 import { useIsMounted } from "~/hooks/use-is-mounted";
 import { useUploadModal } from "~/store/use-upload-modal";
 
@@ -22,7 +23,12 @@ export function UploadModal() {
   const { isOpen, title, description, media, clearInputs, onClose } =
     useUploadModal();
 
-  const handleUpload = useCallback(() => {}, []);
+  const handleUpload = useCallback(async () => {
+    if (!title || !description || !media) return;
+    const metadata = { title, description, media };
+    const uploadResult = await uploadReference(metadata);
+    // TODO: Handle uploadResult
+  }, [title, description, media]);
 
   if (!isMounted) return null;
   return (
