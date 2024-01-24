@@ -1,9 +1,10 @@
+import { NftCard } from "~/components/nft-card";
 import { PageWrapper } from "~/components/page-wrapper";
 import { PageHeading } from "~/components/page-heading";
 import { CreateButton } from "~/components/create-button";
-import { serverClient } from "~/app/_trpc/server-client";
 import { NothingToShow } from "~/components/nothing-to-show";
-import { NftCard } from "~/components/nft-card";
+
+import { serverClient } from "~/app/_trpc/server-client";
 
 export default async function ExplorePage() {
   const publishedTokens = await serverClient.nft.getPublishedTokens();

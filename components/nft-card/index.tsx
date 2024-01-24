@@ -33,9 +33,10 @@ export function NftCard({
     queryKey: ["userToken", tokenHref],
     queryFn: () => fetch(tokenHref).then(async (res) => await res.json()),
   });
-  const data = query.data as IToken;
 
+  const data = query.data as IToken;
   if (!data) return null;
+
   return (
     <Card className="rounded-sm bg-black/50 p-4 shadow-lg">
       <TokenDetails {...data} id={id} walletId={walletId} isOwner={isOwner} />
