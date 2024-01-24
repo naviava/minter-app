@@ -51,6 +51,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   wallets       Wallet[]
+  favorites     Nft[]
 }
 
 model Wallet {
@@ -72,9 +73,11 @@ model Nft {
   isPublished Boolean @default(true)
   walletId    String
   wallet      Wallet  @relation(fields: [walletId], references: [walletId], onDelete: Cascade)
+  favId       String?
+  favUser     User?   @relation(fields: [favId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([walletId])
+  @@index([walletId, favId])
 }

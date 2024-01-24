@@ -2,15 +2,17 @@
 
 import Image from "next/image";
 
+import { ExternalLink, Eye } from "lucide-react";
 import { RiHeartFill } from "react-icons/ri";
 import { RiHeartLine } from "react-icons/ri";
 import { useQuery } from "@tanstack/react-query";
 
 import { Card } from "~/components/ui/card";
 import { Label } from "~/components/ui/label";
+import { Switch } from "~/components/ui/switch";
 import { Separator } from "~/components/ui/separator";
-import { Switch } from "./ui/switch";
-import { ExternalLink } from "lucide-react";
+import { trpc } from "~/app/_trpc/client";
+import { toast } from "sonner";
 
 interface IProps {
   id: string;
@@ -39,6 +41,24 @@ export function NftCard({
   });
   const data = query.data as IToken;
 
+  const { mutate: toggleTokenVisibility } =
+    trpc.nft.toggleVisibility.useMutation({
+      onError: ({ message }) => toast.error(message),
+      onSuccess: (isPublished) => {
+        if (isPublished) {
+          return toast.success("Token is now visible to the public");
+        }
+        return toast.success("Token is now hidden from the public");
+      },
+    });
+
+  function handleCopyLink() {
+    navigator.clipboard.writeText(
+      `${process.env.NEXT_PUBLIC_SITE_URL}/nft/${id}`,
+    );
+    toast.success("Copied to clipboard");
+  }
+
   if (!data) return null;
   return (
     <Card className="rounded-sm p-4">
@@ -62,29 +82,42 @@ export function NftCard({
             {data.title}
           </h3>
         </a>
-        {isOwner && (
+        {!isOwner && (
           <div>
             <Separator />
             <div className="my-4 flex items-center justify-between">
               <Label>Visible to public?</Label>
-              <Switch defaultChecked={isPublished} onCheckedChange={() => {}} />
+              <Switch
+                defaultChecked={isPublished}
+                onCheckedChange={() => toggleTokenVisibility(id)}
+              />
             </div>
           </div>
         )}
         <Separator className="my-6" />
-        <div className="flex items-center">
-          <div
-            role="button"
-            className="flex flex-1 items-center justify-center"
-          >
-            <RiHeartLine className="h-6 w-6" />
-          </div>
-          <Separator orientation="vertical" className="h-6" />
+        <div className="flex items-center gap-x-2">
           <div
             role="button"
             className="flex flex-1 items-center justify-center transition hover:opacity-70"
           >
-            <ExternalLink />
+            <RiHeartLine className="h-[22px] w-[22px]" />
+          </div>
+          <Separator orientation="vertical" className="h-6" />
+          <a
+            href={`/nft/${id}`}
+            target="_blank"
+            className="flex flex-1 items-center justify-center transition hover:opacity-70"
+          >
+            <Eye className="h-[22px] w-[22px]" />
+          </a>
+          <Separator orientation="vertical" className="h-6" />
+          <div
+            role="button"
+            // TODO: Create share modal.
+            onClick={handleCopyLink}
+            className="flex flex-1 items-center justify-center transition hover:opacity-70"
+          >
+            <ExternalLink className="h-[22px] w-[22px]" />
           </div>
         </div>
       </div>
