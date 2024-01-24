@@ -38,7 +38,7 @@ export function NftCard({
   if (!data) return null;
 
   return (
-    <Card className="rounded-sm bg-black/50 p-4 shadow-lg">
+    <Card className="rounded-sm bg-white/50 p-4 shadow-lg dark:bg-black/50">
       <TokenDetails {...data} id={id} walletId={walletId} isOwner={isOwner} />
       {isOwner && <ToggleVisibilityWidget id={id} isPublished={isPublished} />}
       <Separator className="my-2" />

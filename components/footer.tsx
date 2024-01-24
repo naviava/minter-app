@@ -1,15 +1,13 @@
-interface IProps {}
-
-export function Footer({}: IProps) {
+export function Footer() {
   return (
-    <footer className="mt-10 flex items-center justify-center p-6 text-sm">
+    <footer className="mt-10 flex items-center justify-center p-6">
       <div className="space-y-2 text-center">
-        <p>
+        <p className="text-xs">
           Powered by{" "}
           <a
             href="https://www.mintbase.xyz"
             target="_blank"
-            className="bg-gradient-to-r from-red-600 to-indigo-600 bg-clip-text font-semibold text-transparent"
+            className="bg-gradient-to-r from-red-600 to-indigo-600 bg-clip-text text-sm font-semibold tracking-wider text-transparent"
           >
             Mintbase
           </a>{" "}
@@ -17,7 +15,7 @@ export function Footer({}: IProps) {
           <a
             href="https://near.org/"
             target="_blank"
-            className="bg-gradient-to-r from-red-600 to-indigo-600 bg-clip-text font-semibold text-transparent"
+            className="bg-gradient-to-r from-red-600 to-indigo-600 bg-clip-text text-sm font-semibold tracking-wider text-transparent"
           >
             NEAR
           </a>{" "}
