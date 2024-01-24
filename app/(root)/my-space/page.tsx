@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 import { NftCard } from "~/components/nft-card";
 import { PageWrapper } from "~/components/page-wrapper";
 import { PageHeading } from "~/components/page-heading";

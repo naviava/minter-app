@@ -1,5 +1,24 @@
-interface IProps {}
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 
-export function HoverTip({}: IProps) {
-  return <div>HoverTip</div>;
+interface IProps {
+  children: React.ReactNode;
+  message: string;
+}
+
+export function HoverTip({ children, message }: IProps) {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger>{children}</TooltipTrigger>
+        <TooltipContent>
+          <p>{message}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
 }
