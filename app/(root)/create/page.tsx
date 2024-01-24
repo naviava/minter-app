@@ -1,9 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-
 import { X } from "lucide-react";
-import { useMbWallet } from "@mintbase-js/react";
 
 import { Button } from "~/components/ui/button";
 import { PageHeading } from "~/components/page-heading";

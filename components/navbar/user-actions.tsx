@@ -92,6 +92,7 @@ export function UserActions({ children }: IProps) {
         <DropdownMenuSeparator />
         {isConnected ? (
           <DropdownMenuItem onClick={handleDisconnectWallet}>
+            <Unplug className="mr-2 h-4 w-4" />
             Disconnect Wallet
           </DropdownMenuItem>
         ) : (
