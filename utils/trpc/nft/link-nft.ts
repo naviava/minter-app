@@ -7,13 +7,13 @@ import { privateProcedure } from "~/server/trpc";
 export const linkNft = privateProcedure
   .input(
     z.object({
-      walletID: z.string(),
+      walletId: z.string(),
       tokenHref: z.string(),
     }),
   )
   .mutation(async ({ ctx, input }) => {
     const { user } = ctx;
-    const { walletID, tokenHref } = input;
+    const { walletId, tokenHref } = input;
 
     if (!user) {
       throw new TRPCError({
@@ -23,7 +23,7 @@ export const linkNft = privateProcedure
     }
 
     const existingWallet = await db.wallet.findUnique({
-      where: { walletId: walletID },
+      where: { walletId: walletId },
     });
     if (!existingWallet) {
       throw new TRPCError({
@@ -56,7 +56,7 @@ export const linkNft = privateProcedure
     const newNft = await db.nft.create({
       data: {
         tokenHref,
-        walletId: walletID,
+        walletId: walletId,
       },
     });
     return newNft;

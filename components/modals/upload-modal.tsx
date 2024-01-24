@@ -1,10 +1,14 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-import { uploadReference } from "@mintbase-js/storage";
+import { toast } from "sonner";
+import { useMbWallet } from "@mintbase-js/react";
+
 import { useIsMounted } from "~/hooks/use-is-mounted";
+import { uploadReference } from "@mintbase-js/storage";
 import { useUploadModal } from "~/store/use-upload-modal";
 
 import {
@@ -18,17 +22,43 @@ import {
 import { Button } from "~/components/ui/button";
 import { ScrollArea } from "~/components/ui/scroll-area";
 
+import { trpc } from "~/app/_trpc/client";
+import { Loader } from "lucide-react";
+
 export function UploadModal() {
+  const router = useRouter();
   const isMounted = useIsMounted();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { activeAccountId } = useMbWallet();
   const { isOpen, title, description, media, clearInputs, onClose } =
     useUploadModal();
 
+  const { mutate: handleLinkNft } = trpc.nft.linkNft.useMutation({
+    onError: ({ message }) => toast.error(message),
+    onSuccess: () => {
+      toast.success("NFT Created and linked to your account");
+      clearInputs();
+      onClose();
+      router.push("/my-space");
+    },
+  });
+
   const handleUpload = useCallback(async () => {
-    if (!title || !description || !media) return;
-    const metadata = { title, description, media };
-    const uploadResult = await uploadReference(metadata);
-    // TODO: Handle uploadResult
-  }, [title, description, media]);
+    if (!title || !description || !media || !activeAccountId) return;
+    try {
+      setIsLoading(true);
+      const metadata = { title, description, media };
+      const uploadResult = await uploadReference(metadata);
+      const tokenHref = `https://arweave.net/${uploadResult.id}`;
+      console.log(tokenHref);
+      handleLinkNft({ tokenHref, walletId: activeAccountId });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [title, description, media, activeAccountId, handleLinkNft]);
 
   if (!isMounted) return null;
   return (
@@ -57,13 +87,24 @@ export function UploadModal() {
             <Button
               variant="outline"
               size="sm"
+              disabled={isLoading}
               onClick={onClose}
               className="w-full"
             >
               Cancel
             </Button>
-            <Button variant="theme" size="sm" className="w-full">
-              Confirm
+            <Button
+              variant="theme"
+              size="sm"
+              disabled={isLoading}
+              onClick={handleUpload}
+              className="w-full"
+            >
+              {isLoading ? (
+                <Loader className="ml-2 h-4 w-4 animate-spin" />
+              ) : (
+                "Confirm"
+              )}
             </Button>
           </div>
         </DialogFooter>

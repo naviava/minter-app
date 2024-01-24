@@ -71,7 +71,7 @@ model Nft {
   tokenHref   String  @unique
   isPublished Boolean @default(true)
   walletId    String
-  wallet      Wallet  @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  wallet      Wallet  @relation(fields: [walletId], references: [walletId], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

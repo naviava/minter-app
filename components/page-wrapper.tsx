@@ -7,7 +7,7 @@ interface IProps {
 
 export function PageWrapper({ children, className }: IProps) {
   return (
-    <div className={cn("mx-auto mt-6 w-full max-w-7xl px-4", className)}>
+    <div className={cn("mx-auto mt-6 w-full max-w-5xl px-4", className)}>
       {children}
     </div>
   );
