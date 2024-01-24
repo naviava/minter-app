@@ -1,12 +1,16 @@
 "use client";
 
 import Image from "next/image";
+
+import { RiHeartFill } from "react-icons/ri";
+import { RiHeartLine } from "react-icons/ri";
 import { useQuery } from "@tanstack/react-query";
 
 import { Card } from "~/components/ui/card";
 import { Label } from "~/components/ui/label";
 import { Separator } from "~/components/ui/separator";
 import { Switch } from "./ui/switch";
+import { ExternalLink } from "lucide-react";
 
 interface IProps {
   id: string;
@@ -58,10 +62,30 @@ export function NftCard({
             {data.title}
           </h3>
         </a>
+        {isOwner && (
+          <div>
+            <Separator />
+            <div className="my-4 flex items-center justify-between">
+              <Label>Visible to public?</Label>
+              <Switch defaultChecked={isPublished} onCheckedChange={() => {}} />
+            </div>
+          </div>
+        )}
         <Separator className="my-6" />
-        <div className="flex items-center justify-between">
-          <Label>Visible to public?</Label>
-          <Switch defaultChecked={isPublished} />
+        <div className="flex items-center">
+          <div
+            role="button"
+            className="flex flex-1 items-center justify-center"
+          >
+            <RiHeartLine className="h-6 w-6" />
+          </div>
+          <Separator orientation="vertical" className="h-6" />
+          <div
+            role="button"
+            className="flex flex-1 items-center justify-center transition hover:opacity-70"
+          >
+            <ExternalLink />
+          </div>
         </div>
       </div>
     </Card>
