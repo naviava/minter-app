@@ -1,7 +1,6 @@
-import { PageHeading } from "~/components/page-heading";
 import { PageWrapper } from "~/components/page-wrapper";
 import { serverClient } from "~/app/_trpc/server-client";
-import { TokenTitle } from "./_components/token-title";
+import { TokenArticle } from "./_components/token-article";
 
 interface IProps {
   params: {
@@ -14,7 +13,7 @@ export default async function TokenIdPage({ params }: IProps) {
 
   return (
     <PageWrapper>
-      <TokenTitle tokenHref={token.tokenHref} />
+      <TokenArticle token={token} />
     </PageWrapper>
   );
 }
