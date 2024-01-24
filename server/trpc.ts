@@ -11,7 +11,7 @@ const isAuthenticated = middleware(async (opts) => {
   if (!session || !session.user || !session.user.email)
     throw new TRPCError({
       code: "UNAUTHORIZED",
-      message: "Unauthorized action",
+      message: "You must be logged in to do that.",
     });
   const user = await db.user.findUnique({
     where: { email: session.user.email },
@@ -19,7 +19,7 @@ const isAuthenticated = middleware(async (opts) => {
   if (!user || user.disabled)
     throw new TRPCError({
       code: "UNAUTHORIZED",
-      message: "Unauthorized action",
+      message: "User account not found.",
     });
   return opts.next({
     ctx: {

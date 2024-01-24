@@ -7,7 +7,6 @@ import { NothingToShow } from "~/components/nothing-to-show";
 import { serverClient } from "~/app/_trpc/server-client";
 
 export default async function MySpacePage() {
-  const user = await serverClient.user.getAuthProfile();
   const userTokens = await serverClient.nft.getOwnedNft();
 
   return (
@@ -16,9 +15,6 @@ export default async function MySpacePage() {
         <PageHeading label="My Space" tagline="Facts minted by you" />
         <CreateButton />
       </div>
-      {!user && (
-        <NothingToShow message="You need to be logged in to see your space" />
-      )}
       {!userTokens && (
         <NothingToShow message="No tokens linked to your account yet" />
       )}

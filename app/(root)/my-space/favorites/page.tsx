@@ -1,10 +1,11 @@
 import { PageHeading } from "~/components/page-heading";
 import { PageWrapper } from "~/components/page-wrapper";
 import { CreateButton } from "~/components/create-button";
+import { serverClient } from "~/app/_trpc/server-client";
 
-interface IProps {}
+export default async function FavoritesPage() {
+  const favorites = await serverClient.user.getFavorites();
 
-export default function FavoritesPage({}: IProps) {
   return (
     <PageWrapper>
       <div className="flex items-start justify-between">
