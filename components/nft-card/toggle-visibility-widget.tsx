@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import { toast } from "sonner";
 import { Info } from "lucide-react";
 
@@ -16,12 +18,14 @@ interface IProps {
 }
 
 export function ToggleVisibilityWidget({ id, isPublished }: IProps) {
-  const utils = trpc.useUtils();
+  const [isPublishedState, setIsPublishedState] = useState(isPublished);
 
+  const utils = trpc.useUtils();
   const { mutate: toggleTokenVisibility } =
     trpc.nft.toggleVisibility.useMutation({
       onError: ({ message }) => toast.error(message),
       onSuccess: (isPublished) => {
+        setIsPublishedState(isPublished);
         utils.nft.invalidate();
         utils.user.isFavorite.invalidate();
         utils.user.getFavorites.invalidate();
@@ -47,7 +51,7 @@ export function ToggleVisibilityWidget({ id, isPublished }: IProps) {
           </HoverTip>
         </Label>
         <Switch
-          defaultChecked={isPublished}
+          defaultChecked={isPublishedState}
           onCheckedChange={() => toggleTokenVisibility(id)}
         />
       </div>
