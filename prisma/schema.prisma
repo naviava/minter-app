@@ -42,16 +42,16 @@ model VerificationToken {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String     @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?    @unique
   emailVerified DateTime?
   image         String?
-  disabled      Boolean   @default(false)
+  disabled      Boolean    @default(false)
   accounts      Account[]
   sessions      Session[]
   wallets       Wallet[]
-  favorites     Nft[]
+  favorites     Favorite[]
 }
 
 model Wallet {
@@ -68,16 +68,25 @@ model Wallet {
 }
 
 model Nft {
-  id          String  @id @default(cuid())
-  tokenHref   String  @unique
-  isPublished Boolean @default(true)
+  id          String     @id @default(cuid())
+  tokenHref   String     @unique
+  isPublished Boolean    @default(true)
   walletId    String
-  wallet      Wallet  @relation(fields: [walletId], references: [walletId], onDelete: Cascade)
-  favId       String?
-  favUser     User?   @relation(fields: [favId], references: [id])
+  wallet      Wallet     @relation(fields: [walletId], references: [walletId], onDelete: Cascade)
+  favorites   Favorite[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([walletId, favId])
+  @@index([walletId])
+}
+
+model Favorite {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  nftId  String
+  nft    Nft    @relation(fields: [nftId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, nftId])
 }
