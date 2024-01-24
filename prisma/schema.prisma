@@ -58,7 +58,23 @@ model Wallet {
   walletId String @unique
   userId   String
   user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  nft      Nft[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Nft {
+  id          String  @id @default(cuid())
+  tokenHref   String  @unique
+  isPublished Boolean @default(true)
+  walletId    String
+  wallet      Wallet  @relation(fields: [walletId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([walletId])
 }
