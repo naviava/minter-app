@@ -76,7 +76,7 @@ export function TokenArticle({ token }: IProps) {
             <Button
               variant="link"
               size="sm"
-              onClick={() => handleToggleFavorite(token.id)}
+              onClick={() => {}}
               className="px-2"
             >
               <ExternalLink className="h-[22px] w-[22px]" />
@@ -84,7 +84,7 @@ export function TokenArticle({ token }: IProps) {
           </HoverTip>
         </div>
       </div>
-      <div className="relative aspect-square w-full">
+      <div className="relative mx-auto aspect-square w-full max-w-xl">
         <Image
           fill
           src={data.media}
