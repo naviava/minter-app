@@ -1,11 +1,10 @@
 "use client";
 
-import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa6";
 
-import { useAuthModal } from "~/store/use-auth-modal";
 import { useIsMounted } from "~/hooks/use-is-mounted";
+import { useShareModal } from "~/store/use-share-modal";
 
 import {
   Dialog,
@@ -16,9 +15,9 @@ import {
 } from "~/components/ui/dialog";
 import { Button } from "~/components/ui/button";
 
-export function AuthModal() {
+export function ShareModal() {
   const isMounted = useIsMounted();
-  const { isOpen, onClose } = useAuthModal();
+  const { isOpen, onClose } = useShareModal();
 
   if (!isMounted) return null;
   return (
@@ -30,16 +29,7 @@ export function AuthModal() {
             Sign in using one of the below accounts.
           </DialogDescription>
         </DialogHeader>
-        <div className="mx-auto space-x-4">
-          <Button variant="outline" onClick={() => signIn("google")}>
-            <FcGoogle className="mr-2" />
-            Google
-          </Button>
-          <Button variant="outline" onClick={() => signIn("github")}>
-            <FaGithub className="mr-2" />
-            GitHub
-          </Button>
-        </div>
+        <div className=""></div>
       </DialogContent>
     </Dialog>
   );
