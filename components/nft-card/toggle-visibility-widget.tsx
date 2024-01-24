@@ -1,7 +1,9 @@
 import { toast } from "sonner";
+import { Info } from "lucide-react";
 
 import { Label } from "~/components/ui/label";
 import { Switch } from "~/components/ui/switch";
+import { HoverTip } from "~/components/hover-tip";
 import { Separator } from "~/components/ui/separator";
 
 import { trpc } from "~/app/_trpc/client";
@@ -27,7 +29,16 @@ export function ToggleVisibilityWidget({ id, isPublished }: IProps) {
     <div>
       <Separator className="mt-2" />
       <div className="my-4 flex items-center justify-between">
-        <Label>Visible to public?</Label>
+        <Label className="flex items-center gap-x-2">
+          <span>Visible to public?</span>
+          <HoverTip
+            side="top"
+            message="Enabling this will make your token visible to the public"
+            contentClassName="max-w-[20rem] text-xs bg-neutral-700 border-none"
+          >
+            <Info className="h-4 w-4" />
+          </HoverTip>
+        </Label>
         <Switch
           defaultChecked={isPublished}
           onCheckedChange={() => toggleTokenVisibility(id)}
