@@ -4,7 +4,7 @@ interface IProps {
   id: string;
   title: string;
   media: string;
-  walletId: string;
+  walletId?: string;
   isOwner?: boolean;
 }
 
