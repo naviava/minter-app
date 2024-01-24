@@ -1,21 +1,23 @@
 "use client";
 
+import { useCallback } from "react";
 import Image from "next/image";
-import { PageHeading } from "~/components/page-heading";
 
 import { toast } from "sonner";
 import { ExternalLink } from "lucide-react";
 import { RiHeartLine } from "react-icons/ri";
+
 import { useQuery } from "@tanstack/react-query";
+import { useAuthModal } from "~/store/use-auth-modal";
+import { useShareModal } from "~/store/use-share-modal";
 
 import { Button } from "~/components/ui/button";
 import { HoverTip } from "~/components/hover-tip";
+import { PageHeading } from "~/components/page-heading";
 import { FavoriteGradientIcon } from "~/components/nft-card/favorite-gradient-icon";
 
 import { trpc } from "~/app/_trpc/client";
 import { serverClient } from "~/app/_trpc/server-client";
-import { useAuthModal } from "~/store/use-auth-modal";
-import { useCallback } from "react";
 
 interface IToken {
   title: string;
@@ -28,7 +30,8 @@ interface IProps {
 }
 
 export function TokenArticle({ token }: IProps) {
-  const { onOpen } = useAuthModal();
+  const { onOpen: openAuthModal } = useAuthModal();
+  const { onOpen: openShareModal } = useShareModal();
   const { data: user } = trpc.user.getAuthProfile.useQuery();
 
   const query = useQuery({
@@ -47,9 +50,9 @@ export function TokenArticle({ token }: IProps) {
   });
 
   const handleToggleFavorite = useCallback(() => {
-    if (!user) return onOpen();
+    if (!user) return openAuthModal();
     toggleFavorite(token.id);
-  }, [onOpen, toggleFavorite, token.id, user]);
+  }, [token.id, user, openAuthModal, toggleFavorite]);
 
   const data = query.data as IToken;
   if (!data) return null;
@@ -84,7 +87,11 @@ export function TokenArticle({ token }: IProps) {
             <Button
               variant="link"
               size="sm"
-              onClick={() => {}}
+              onClick={() =>
+                openShareModal(
+                  `${process.env.NEXT_PUBLIC_SITE_URL}/nft/${token.id}`,
+                )
+              }
               className="px-2"
             >
               <ExternalLink className="h-[22px] w-[22px]" />

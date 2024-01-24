@@ -39,7 +39,7 @@ export function ToggleVisibilityWidget({ id, isPublished }: IProps) {
           <HoverTip
             side="top"
             message="Enabling this will make your token visible to the public"
-            contentClassName="max-w-[20rem] text-xs bg-neutral-700 border-none"
+            contentClassName="max-w-[20rem] text-xs dark:bg-neutral-700 border-none"
           >
             <Info className="h-4 w-4" />
           </HoverTip>

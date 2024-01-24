@@ -4,21 +4,25 @@ import { toast } from "sonner";
 import { RiHeartLine } from "react-icons/ri";
 import { ExternalLink, Eye } from "lucide-react";
 
+import { useAuthModal } from "~/store/use-auth-modal";
+import { useShareModal } from "~/store/use-share-modal";
+
 import { HoverTip } from "~/components/hover-tip";
 import { Separator } from "~/components/ui/separator";
 import { FavoriteGradientIcon } from "./favorite-gradient-icon";
 
 import { cn } from "~/lib/utils";
 import { trpc } from "~/app/_trpc/client";
-import { useAuthModal } from "~/store/use-auth-modal";
 
 interface IProps {
   id: string;
 }
 
 export function NftCardActions({ id }: IProps) {
+  const { onOpen: openAuthModal } = useAuthModal();
+  const { onOpen: openShareModal } = useShareModal();
+
   const utils = trpc.useUtils();
-  const { onOpen } = useAuthModal();
   const { data: user } = trpc.user.getAuthProfile.useQuery();
   const { data: isFavorite } = trpc.user.isFavorite.useQuery(id);
 
@@ -30,15 +34,8 @@ export function NftCardActions({ id }: IProps) {
     },
   });
 
-  function handleCopyLink() {
-    navigator.clipboard.writeText(
-      `${process.env.NEXT_PUBLIC_SITE_URL}/nft/${id}`,
-    );
-    toast.success("Link copied to clipboard");
-  }
-
   function handleToggleFavorite() {
-    if (!user) return onOpen();
+    if (!user) return openAuthModal();
     toggleFavorite(id);
   }
 
@@ -77,8 +74,9 @@ export function NftCardActions({ id }: IProps) {
       <HoverTip message="Share" className="flex-1">
         <div
           role="button"
-          // TODO: Create share modal.
-          onClick={handleCopyLink}
+          onClick={() =>
+            openShareModal(`${process.env.NEXT_PUBLIC_SITE_URL}/nft/${id}`)
+          }
           className="flex items-center justify-center transition hover:opacity-70"
         >
           <ExternalLink className="h-[22px] w-[22px]" />
