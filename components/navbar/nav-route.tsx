@@ -3,11 +3,11 @@
 import { useCallback } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
+import { useAuthModal } from "~/store/use-auth-modal";
 import { Button } from "~/components/ui/button";
 
 import { cn } from "~/lib/utils";
 import { trpc } from "~/app/_trpc/client";
-import { useAuthModal } from "~/store/use-auth-modal";
 
 interface IProps {
   label: string;

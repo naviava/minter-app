@@ -1,4 +1,5 @@
 import { Navbar } from "~/components/navbar";
+import { Footer } from "~/components/footer";
 
 interface IProps {
   children: React.ReactNode;
@@ -11,6 +12,7 @@ export default function LandingLayout({ children }: IProps) {
       <div className="absolute right-8 top-20 z-[-1] h-[250px] w-[250px] rounded-full bg-indigo-600 blur-[8rem] md:right-20 md:top-12 md:h-[500px] md:w-[500px] md:blur-[14rem]" />
       <Navbar />
       {children}
+      <Footer />
     </main>
   );
 }
