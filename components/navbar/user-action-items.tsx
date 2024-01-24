@@ -9,12 +9,10 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "~/components/ui/dropdown-menu";
-import { trpc } from "~/app/_trpc/client";
 
 export function UserActionItems() {
   const router = useRouter();
   const { isConnected, modal } = useMbWallet();
-  const { data: user } = trpc.user.getAuthProfile.useQuery();
 
   const handleCreateNftRoute = useCallback(() => {
     if (!isConnected) return modal.show();
