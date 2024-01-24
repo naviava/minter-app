@@ -44,6 +44,7 @@ export function TokenArticle({ token }: IProps) {
   const { mutate: toggleFavorite } = trpc.user.toggleFavorite.useMutation({
     onError: ({ message }) => toast.error(message),
     onSuccess: ({ message }) => {
+      utils.user.getFavorites.invalidate();
       utils.user.isFavorite.invalidate(token.id);
       toast.success(message);
     },
