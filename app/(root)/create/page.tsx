@@ -12,9 +12,7 @@ import { CreateAsset } from "./_components/create-asset";
 
 export default function CreatePage() {
   const router = useRouter();
-  const { isConnected } = useMbWallet();
 
-  if (!isConnected) return null;
   return (
     <PageWrapper className="mx-auto max-w-xl">
       <div className="flex items-start justify-between">
