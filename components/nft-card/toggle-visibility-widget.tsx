@@ -22,7 +22,9 @@ export function ToggleVisibilityWidget({ id, isPublished }: IProps) {
     trpc.nft.toggleVisibility.useMutation({
       onError: ({ message }) => toast.error(message),
       onSuccess: (isPublished) => {
-        utils.nft.getPublishedTokens.invalidate();
+        utils.nft.invalidate();
+        utils.user.isFavorite.invalidate();
+        utils.user.getFavorites.invalidate();
         if (isPublished) {
           return toast.success("Token is now visible to the public");
         }
