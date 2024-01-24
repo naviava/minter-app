@@ -1,12 +1,15 @@
 import Image from "next/image";
 
+import { NftCard } from "~/components/nft-card";
 import { PageWrapper } from "~/components/page-wrapper";
 import { PageHeading } from "~/components/page-heading";
+import { NothingToShow } from "~/components/nothing-to-show";
 import { CreateButton } from "./_components/create-button";
 
 import { serverClient } from "~/app/_trpc/server-client";
 
 export default async function MySpacePage() {
+  const user = await serverClient.user.getAuthProfile();
   const userTokens = await serverClient.nft.getOwnedNft();
 
   return (
@@ -15,20 +18,17 @@ export default async function MySpacePage() {
         <PageHeading label="My Space" tagline="Facts minted by you" />
         <CreateButton />
       </div>
-      {!userTokens && (
-        <div className="mt-24 space-y-10">
-          <div className="relative mx-auto aspect-square w-[250px]">
-            <Image
-              fill
-              src="/nothing-to-show.svg"
-              alt="No NFTs linked to this account."
-            />
-          </div>
-          <h2 className="text-balance text-center text-xl font-light text-muted-foreground">
-            No tokens linked to your account yet
-          </h2>
-        </div>
+      {!user && (
+        <NothingToShow message="You need to be logged in to see your space" />
       )}
+      {!userTokens && (
+        <NothingToShow message="No tokens linked to your account yet" />
+      )}
+      <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-6">
+        {userTokens?.map((token) => (
+          <NftCard key={token.id} {...token} isOwner />
+        ))}
+      </div>
     </PageWrapper>
   );
 }
