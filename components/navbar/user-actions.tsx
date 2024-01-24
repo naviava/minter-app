@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import { toast } from "sonner";
 import { signOut } from "next-auth/react";
@@ -14,8 +15,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import { UserActionItems } from "./user-action-items";
+
 import { trpc } from "~/app/_trpc/client";
-import { usePathname, useRouter } from "next/navigation";
 
 interface IProps {
   children: React.ReactNode;
@@ -85,9 +87,7 @@ export function UserActions({ children }: IProps) {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Account</DropdownMenuItem>
-        <DropdownMenuItem>Team</DropdownMenuItem>
-        <DropdownMenuItem>Subscription</DropdownMenuItem>
+        <UserActionItems />
         <DropdownMenuSeparator />
         {isConnected ? (
           <DropdownMenuItem onClick={handleDisconnectWallet}>
