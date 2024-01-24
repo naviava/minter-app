@@ -1,37 +1,43 @@
 "use client";
 
+import { useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useMbWallet } from "@mintbase-js/react";
-import { useAuthModal } from "~/store/use-auth-modal";
+import { BookOpenText, Heart, Orbit, PlusCircle } from "lucide-react";
 
-import { DropdownMenuItem } from "~/components/ui/dropdown-menu";
+import {
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "~/components/ui/dropdown-menu";
 import { trpc } from "~/app/_trpc/client";
-import { useCallback } from "react";
 
 export function UserActionItems() {
   const router = useRouter();
   const { isConnected, modal } = useMbWallet();
-  const { onOpen: openAuthModal } = useAuthModal();
   const { data: user } = trpc.user.getAuthProfile.useQuery();
 
-  const handleMySpaceRoute = useCallback(() => {
-    if (!user) return openAuthModal();
-    return router.push("/my-space");
-  }, [router, user, openAuthModal]);
-
   const handleCreateNftRoute = useCallback(() => {
-    if (!user) return openAuthModal();
     if (!isConnected) return modal.show();
     return router.push("/create");
-  }, [router, user, modal, isConnected, openAuthModal]);
+  }, [router, modal, isConnected]);
 
   return (
     <>
       <DropdownMenuItem onClick={() => router.push("/explore")}>
+        <BookOpenText className="mr-2 h-4 w-4" />
         Explore
       </DropdownMenuItem>
-      <DropdownMenuItem onClick={handleMySpaceRoute}>My Space</DropdownMenuItem>
+      <DropdownMenuItem onClick={() => router.push("/my-space")}>
+        <Orbit className="mr-2 h-4 w-4" />
+        My Space
+      </DropdownMenuItem>
+      <DropdownMenuItem onClick={() => router.push("/my-space/favorites")}>
+        <Heart className="mr-2 h-4 w-4" />
+        My Favorites
+      </DropdownMenuItem>
+      <DropdownMenuSeparator />
       <DropdownMenuItem onClick={handleCreateNftRoute}>
+        <PlusCircle className="mr-2 h-4 w-4" />
         Create NFT
       </DropdownMenuItem>
     </>

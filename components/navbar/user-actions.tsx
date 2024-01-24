@@ -18,6 +18,7 @@ import {
 import { UserActionItems } from "./user-action-items";
 
 import { trpc } from "~/app/_trpc/client";
+import { LogOut, Unplug } from "lucide-react";
 
 interface IProps {
   children: React.ReactNode;
@@ -95,10 +96,14 @@ export function UserActions({ children }: IProps) {
           </DropdownMenuItem>
         ) : (
           <DropdownMenuItem onClick={handleConnectWallet}>
+            <Unplug className="mr-2 h-4 w-4" />
             Connect Wallet
           </DropdownMenuItem>
         )}
-        <DropdownMenuItem onClick={handleSignOut}>Sign out</DropdownMenuItem>
+        <DropdownMenuItem onClick={handleSignOut}>
+          <LogOut className="mr-2 h-4 w-4" />
+          Sign out
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
