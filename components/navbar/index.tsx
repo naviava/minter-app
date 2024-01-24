@@ -11,6 +11,7 @@ const ROUTES = [
   {
     label: "My Space",
     href: "/my-space",
+    requireAuth: true,
   },
 ];
 

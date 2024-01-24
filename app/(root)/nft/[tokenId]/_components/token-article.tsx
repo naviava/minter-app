@@ -14,6 +14,8 @@ import { FavoriteGradientIcon } from "~/components/nft-card/favorite-gradient-ic
 
 import { trpc } from "~/app/_trpc/client";
 import { serverClient } from "~/app/_trpc/server-client";
+import { useAuthModal } from "~/store/use-auth-modal";
+import { useCallback } from "react";
 
 interface IToken {
   title: string;
@@ -26,6 +28,9 @@ interface IProps {
 }
 
 export function TokenArticle({ token }: IProps) {
+  const { onOpen } = useAuthModal();
+  const { data: user } = trpc.user.getAuthProfile.useQuery();
+
   const query = useQuery({
     queryKey: ["token", token.tokenHref],
     queryFn: () => fetch(token.tokenHref).then(async (res) => await res.json()),
@@ -33,15 +38,18 @@ export function TokenArticle({ token }: IProps) {
 
   const utils = trpc.useUtils();
   const { data: isFavorite } = trpc.user.isFavorite.useQuery(token.id);
-  const { mutate: handleToggleFavorite } = trpc.user.toggleFavorite.useMutation(
-    {
-      onError: ({ message }) => toast.error(message),
-      onSuccess: ({ message }) => {
-        utils.user.isFavorite.invalidate(token.id);
-        toast.success(message);
-      },
+  const { mutate: toggleFavorite } = trpc.user.toggleFavorite.useMutation({
+    onError: ({ message }) => toast.error(message),
+    onSuccess: ({ message }) => {
+      utils.user.isFavorite.invalidate(token.id);
+      toast.success(message);
     },
-  );
+  });
+
+  const handleToggleFavorite = useCallback(() => {
+    if (!user) return onOpen();
+    toggleFavorite(token.id);
+  }, [onOpen, toggleFavorite, token.id, user]);
 
   const data = query.data as IToken;
   if (!data) return null;
@@ -62,7 +70,7 @@ export function TokenArticle({ token }: IProps) {
             <Button
               variant="link"
               size="sm"
-              onClick={() => handleToggleFavorite(token.id)}
+              onClick={handleToggleFavorite}
               className="px-2"
             >
               {isFavorite ? (

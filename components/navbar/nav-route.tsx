@@ -1,26 +1,40 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useCallback } from "react";
+import { usePathname, useRouter } from "next/navigation";
+
 import { Button } from "~/components/ui/button";
+
 import { cn } from "~/lib/utils";
+import { trpc } from "~/app/_trpc/client";
+import { useAuthModal } from "~/store/use-auth-modal";
 
 interface IProps {
   label: string;
   href: string;
+  requireAuth?: boolean;
 }
 
-export function NavRoute({ label, href }: IProps) {
+export function NavRoute({ label, href, requireAuth }: IProps) {
+  const router = useRouter();
   const pathname = usePathname();
+
+  const { onOpen } = useAuthModal();
+  const { data: user } = trpc.user.getAuthProfile.useQuery();
+
+  const handleClick = useCallback(() => {
+    if (requireAuth && !user) return onOpen();
+    router.push(href);
+  }, [href, requireAuth, router, user, onOpen]);
 
   return (
     <Button
-      asChild
       variant="link"
       size="sm"
+      onClick={handleClick}
       className={cn("md:text-base", pathname === href && "font-bold underline")}
     >
-      <Link href={href}>{label}</Link>
+      {label}
     </Button>
   );
 }

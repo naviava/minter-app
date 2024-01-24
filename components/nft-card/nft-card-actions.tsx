@@ -10,6 +10,7 @@ import { FavoriteGradientIcon } from "./favorite-gradient-icon";
 
 import { cn } from "~/lib/utils";
 import { trpc } from "~/app/_trpc/client";
+import { useAuthModal } from "~/store/use-auth-modal";
 
 interface IProps {
   id: string;
@@ -17,22 +18,28 @@ interface IProps {
 
 export function NftCardActions({ id }: IProps) {
   const utils = trpc.useUtils();
+  const { onOpen } = useAuthModal();
+  const { data: user } = trpc.user.getAuthProfile.useQuery();
   const { data: isFavorite } = trpc.user.isFavorite.useQuery(id);
-  const { mutate: handleToggleFavorite } = trpc.user.toggleFavorite.useMutation(
-    {
-      onError: ({ message }) => toast.error(message),
-      onSuccess: ({ message }) => {
-        utils.user.isFavorite.invalidate(id);
-        toast.success(message);
-      },
+
+  const { mutate: toggleFavorite } = trpc.user.toggleFavorite.useMutation({
+    onError: ({ message }) => toast.error(message),
+    onSuccess: ({ message }) => {
+      utils.user.isFavorite.invalidate(id);
+      toast.success(message);
     },
-  );
+  });
 
   function handleCopyLink() {
     navigator.clipboard.writeText(
       `${process.env.NEXT_PUBLIC_SITE_URL}/nft/${id}`,
     );
     toast.success("Link copied to clipboard");
+  }
+
+  function handleToggleFavorite() {
+    if (!user) return onOpen();
+    toggleFavorite(id);
   }
 
   return (
@@ -43,7 +50,7 @@ export function NftCardActions({ id }: IProps) {
       >
         <div
           role="button"
-          onClick={() => handleToggleFavorite(id)}
+          onClick={handleToggleFavorite}
           className={cn(
             "flex items-center justify-center transition",
             !isFavorite && "hover:opacity-70",
