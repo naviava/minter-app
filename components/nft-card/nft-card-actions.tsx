@@ -1,16 +1,33 @@
+"use client";
+
 import { toast } from "sonner";
-import { RiHeartFill } from "react-icons/ri";
 import { RiHeartLine } from "react-icons/ri";
 import { ExternalLink, Eye } from "lucide-react";
 
+import { HoverTip } from "~/components/hover-tip";
 import { Separator } from "~/components/ui/separator";
-import { HoverTip } from "../hover-tip";
+import { FavoriteGradientIcon } from "./favorite-gradient-icon";
+
+import { cn } from "~/lib/utils";
+import { trpc } from "~/app/_trpc/client";
 
 interface IProps {
   id: string;
 }
 
 export function NftCardActions({ id }: IProps) {
+  const utils = trpc.useUtils();
+  const { data: isFavorite } = trpc.user.isFavorite.useQuery(id);
+  const { mutate: handleToggleFavorite } = trpc.user.toggleFavorite.useMutation(
+    {
+      onError: ({ message }) => toast.error(message),
+      onSuccess: ({ message }) => {
+        utils.user.isFavorite.invalidate(id);
+        toast.success(message);
+      },
+    },
+  );
+
   function handleCopyLink() {
     navigator.clipboard.writeText(
       `${process.env.NEXT_PUBLIC_SITE_URL}/nft/${id}`,
@@ -20,12 +37,23 @@ export function NftCardActions({ id }: IProps) {
 
   return (
     <div className="flex items-center gap-x-2">
-      <HoverTip message="Add to favorites" className="flex-1">
+      <HoverTip
+        message={isFavorite ? "Remove from favorites" : "Add to favorites"}
+        className="flex-1"
+      >
         <div
           role="button"
-          className="flex items-center justify-center transition hover:opacity-70"
+          onClick={() => handleToggleFavorite(id)}
+          className={cn(
+            "flex items-center justify-center transition",
+            !isFavorite && "hover:opacity-70",
+          )}
         >
-          <RiHeartLine className="h-[22px] w-[22px]" />
+          {isFavorite ? (
+            <FavoriteGradientIcon />
+          ) : (
+            <RiHeartLine className="h-[22px] w-[22px]" />
+          )}
         </div>
       </HoverTip>
       <Separator orientation="vertical" className="h-6" />

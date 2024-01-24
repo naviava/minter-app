@@ -1,3 +1,5 @@
+"use client";
+
 import { toast } from "sonner";
 import { Info } from "lucide-react";
 
@@ -14,10 +16,13 @@ interface IProps {
 }
 
 export function ToggleVisibilityWidget({ id, isPublished }: IProps) {
+  const utils = trpc.useUtils();
+
   const { mutate: toggleTokenVisibility } =
     trpc.nft.toggleVisibility.useMutation({
       onError: ({ message }) => toast.error(message),
       onSuccess: (isPublished) => {
+        utils.nft.getPublishedTokens.invalidate();
         if (isPublished) {
           return toast.success("Token is now visible to the public");
         }
@@ -29,7 +34,7 @@ export function ToggleVisibilityWidget({ id, isPublished }: IProps) {
     <div>
       <Separator className="mt-2" />
       <div className="my-4 flex items-center justify-between">
-        <Label className="flex items-center gap-x-2">
+        <Label className="flex items-center gap-x-1">
           <span>Visible to public?</span>
           <HoverTip
             side="top"

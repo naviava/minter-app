@@ -5,7 +5,7 @@ import { db } from "~/lib/db";
 import { privateProcedure } from "~/server/trpc";
 
 export const toggleVisibility = privateProcedure
-  .input(z.string())
+  .input(z.string().min(1, { message: "Token ID is required." }))
   .mutation(async ({ ctx, input }) => {
     const { user } = ctx;
     if (!user) {

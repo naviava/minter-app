@@ -7,8 +7,8 @@ import { privateProcedure } from "~/server/trpc";
 export const linkNft = privateProcedure
   .input(
     z.object({
-      walletId: z.string(),
-      tokenHref: z.string(),
+      walletId: z.string().min(1, { message: "Wallet ID is required." }),
+      tokenHref: z.string().min(1, { message: "Token ID is required." }),
     }),
   )
   .mutation(async ({ ctx, input }) => {

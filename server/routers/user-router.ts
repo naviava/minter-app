@@ -1,8 +1,13 @@
 import { router } from "~/server/trpc";
-import { getAuthProfile } from "~/utils/trpc/user/get-auth-profile";
+
 import { linkWallet } from "~/utils/trpc/user/link-wallet";
+import { isFavorite } from "~/utils/trpc/user/is-favorite";
+import { toggleFavorite } from "~/utils/trpc/user/toggle-favorite";
+import { getAuthProfile } from "~/utils/trpc/user/get-auth-profile";
 
 export const userRouter = router({
   getAuthProfile,
   linkWallet,
+  toggleFavorite,
+  isFavorite,
 });

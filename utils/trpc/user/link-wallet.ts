@@ -4,7 +4,7 @@ import { db } from "~/lib/db";
 import { privateProcedure } from "~/server/trpc";
 
 export const linkWallet = privateProcedure
-  .input(z.string())
+  .input(z.string().min(1, { message: "Wallet ID is required." }))
   .mutation(async ({ ctx, input }) => {
     const { user } = ctx;
     if (!user) {
