@@ -101,5 +101,8 @@ model Comment {
   nftId  String
   nft    Nft    @relation(fields: [nftId], references: [id], onDelete: Cascade)
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@index([userId, nftId])
 }
