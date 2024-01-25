@@ -51,6 +51,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   wallets       Wallet[]
+  comments      Comment[]
   favorites     Favorite[]
 }
 
@@ -73,6 +74,7 @@ model Nft {
   isPublished Boolean    @default(true)
   walletId    String
   wallet      Wallet     @relation(fields: [walletId], references: [walletId], onDelete: Cascade)
+  comments    Comment[]
   favorites   Favorite[]
 
   createdAt DateTime @default(now())
@@ -89,4 +91,15 @@ model Favorite {
   nft    Nft    @relation(fields: [nftId], references: [id], onDelete: Cascade)
 
   @@unique([userId, nftId])
+}
+
+model Comment {
+  id     String @id @default(cuid())
+  text   String
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  nftId  String
+  nft    Nft    @relation(fields: [nftId], references: [id], onDelete: Cascade)
+
+  @@index([userId, nftId])
 }
