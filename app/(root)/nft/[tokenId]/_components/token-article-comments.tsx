@@ -1,7 +1,7 @@
 "use client";
 
-import { trpc } from "~/app/_trpc/client";
 import { Comment } from "./comment";
+import { trpc } from "~/app/_trpc/client";
 
 interface IProps {
   id: string;
@@ -27,6 +27,7 @@ export function TokenArticleComments({ id }: IProps) {
         <Comment
           key={comment.id}
           text={comment.text}
+          commentId={comment.id}
           authorId={comment.user.id}
           authorName={comment.user.name || ""}
           authorAvatar={comment.user.image || ""}
