@@ -29,7 +29,8 @@ export function TokenArticleComments({ id }: IProps) {
         </h2>
         <Button variant="ghost" onClick={() => onOpen(id)}>
           <PlusCircle className="mr-2 h-4 w-4" />
-          Leave a comment
+          <span className="md:hidden">Add</span>
+          <span className="hidden md:inline-block">Leave a comment</span>
         </Button>
       </div>
       {(!comments || !comments.length || !commentCount) && (
