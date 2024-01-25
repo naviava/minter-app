@@ -41,7 +41,7 @@ export function TokenArticleHeader({ id, title, userName }: IProps) {
   }, [id, user, openAuthModal, toggleFavorite]);
 
   return (
-    <div className="flex items-start justify-between gap-x-4">
+    <div className="flex w-full items-start justify-between gap-x-4">
       <PageHeading
         label={title}
         tagline={`Created by ${userName ? userName : "Anonymous"}`}

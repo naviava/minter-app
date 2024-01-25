@@ -42,7 +42,7 @@ export function TokenArticle({ token }: IProps) {
           className="object-cover"
         />
       </div>
-      <p className="whitespace-pre-wrap">{data.description}</p>
+      <p className="whitespace-pre-wrap break-words">{data.description}</p>
       <CommentSection id={token.id} />
     </div>
   );
