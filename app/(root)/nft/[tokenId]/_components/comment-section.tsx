@@ -8,6 +8,7 @@ import { MessageSquare, Share2 } from "lucide-react";
 
 import { useAuthModal } from "~/store/use-auth-modal";
 import { useShareModal } from "~/store/use-share-modal";
+import { useCommentModal } from "~/store/use-comment-modal";
 
 import { Button } from "~/components/ui/button";
 import { HoverTip } from "~/components/hover-tip";
@@ -22,6 +23,7 @@ interface IProps {
 export function CommentSection({ id }: IProps) {
   const { onOpen: openAuthModal } = useAuthModal();
   const { onOpen: openShareModal } = useShareModal();
+  const { onOpen: openCommentModal } = useCommentModal();
 
   const { data: user } = trpc.user.getAuthProfile.useQuery();
   const { data: isFavorite } = trpc.favorites.isFavorite.useQuery(id);
@@ -40,6 +42,11 @@ export function CommentSection({ id }: IProps) {
     if (!user) return openAuthModal();
     toggleFavorite(id);
   }, [id, user, openAuthModal, toggleFavorite]);
+
+  const handleCommentRequest = useCallback(() => {
+    if (!user) return openAuthModal();
+    openCommentModal(id);
+  }, [id, user, openAuthModal, openCommentModal]);
 
   return (
     <div>
@@ -60,7 +67,7 @@ export function CommentSection({ id }: IProps) {
             </Button>
           </HoverTip>
           <HoverTip message="Leave a comment" side="top" sideOffset={0}>
-            <Button variant="link" size="sm">
+            <Button variant="link" size="sm" onClick={handleCommentRequest}>
               <MessageSquare className="h-[22px] w-[22px]" />
             </Button>
           </HoverTip>

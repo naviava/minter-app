@@ -2,11 +2,13 @@ import { router } from "./trpc";
 
 import { nftRouter } from "./routers/nft-router";
 import { userRouter } from "./routers/user-router";
+import { commentRouter } from "./routers/comment-router";
 import { favoritesRouter } from "./routers/favorites-router";
 
 export const appRouter = router({
-  user: userRouter,
   nft: nftRouter,
+  user: userRouter,
+  comment: commentRouter,
   favorites: favoritesRouter,
 });
 
