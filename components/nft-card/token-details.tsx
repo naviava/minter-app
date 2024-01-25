@@ -29,7 +29,7 @@ export function TokenDetails({ id, title, media, walletId, isOwner }: IProps) {
           </div>
         )}
         <a href={`/nft/${id}`} target="_blank">
-          <h3 className="mt-2 line-clamp-2 text-balance text-center font-medium transition hover:underline">
+          <h3 className="mt-2 line-clamp-1 text-balance break-words text-center font-medium transition hover:underline">
             {title}
           </h3>
         </a>

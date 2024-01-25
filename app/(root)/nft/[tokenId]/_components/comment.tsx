@@ -77,7 +77,9 @@ export function Comment({
               </HoverTip>
             )}
           </div>
-          <p className="mt-2 whitespace-pre-wrap md:mt-1">{text}</p>
+          <p className="mt-2 max-w-[90%] whitespace-pre-wrap break-words md:mt-1">
+            {text}
+          </p>
         </div>
       </div>
       <Separator className="my-6" />
