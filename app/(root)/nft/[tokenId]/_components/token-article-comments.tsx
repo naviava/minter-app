@@ -27,6 +27,7 @@ export function TokenArticleComments({ id }: IProps) {
         <Comment
           key={comment.id}
           text={comment.text}
+          authorId={comment.user.id}
           authorName={comment.user.name || ""}
           authorAvatar={comment.user.image || ""}
           createdAt={comment.createdAt}
