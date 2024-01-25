@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import Image from "next/image";
 
 import { toast } from "sonner";
-import { ExternalLink } from "lucide-react";
+import { Share2 } from "lucide-react";
 import { RiHeartLine } from "react-icons/ri";
 
 import { useQuery } from "@tanstack/react-query";
@@ -95,7 +95,7 @@ export function TokenArticle({ token }: IProps) {
               }
               className="px-2"
             >
-              <ExternalLink className="h-[22px] w-[22px]" />
+              <Share2 className="h-[22px] w-[22px]" />
             </Button>
           </HoverTip>
         </div>

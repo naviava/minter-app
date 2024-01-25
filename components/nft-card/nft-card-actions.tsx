@@ -1,8 +1,8 @@
 "use client";
 
 import { toast } from "sonner";
+import { Eye, Share2 } from "lucide-react";
 import { RiHeartLine } from "react-icons/ri";
-import { ExternalLink, Eye } from "lucide-react";
 
 import { useAuthModal } from "~/store/use-auth-modal";
 import { useShareModal } from "~/store/use-share-modal";
@@ -80,7 +80,7 @@ export function NftCardActions({ id }: IProps) {
           }
           className="flex items-center justify-center transition hover:opacity-70"
         >
-          <ExternalLink className="h-[22px] w-[22px]" />
+          <Share2 className="h-[22px] w-[22px]" />
         </div>
       </HoverTip>
     </div>
