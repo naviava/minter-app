@@ -1,11 +1,13 @@
 "use client";
 
+import { useCallback } from "react";
 import { PlusCircle } from "lucide-react";
 
 import { Button } from "~/components/ui/button";
 import { Comment } from "./comment";
 
 import { trpc } from "~/app/_trpc/client";
+import { useAuthModal } from "~/store/use-auth-modal";
 import { useCommentModal } from "~/store/use-comment-modal";
 
 interface IProps {
@@ -13,10 +15,17 @@ interface IProps {
 }
 
 export function TokenArticleComments({ id }: IProps) {
-  const { onOpen } = useCommentModal();
+  const { onOpen: openAuthModal } = useAuthModal();
+  const { onOpen: openCommentModal } = useCommentModal();
 
+  const { data: user } = trpc.user.getAuthProfile.useQuery();
   const { data: comments } = trpc.comment.getComments.useQuery(id);
   const { data: commentCount } = trpc.comment.getCommentCount.useQuery(id);
+
+  const handleAddComment = useCallback(() => {
+    if (!user) return openAuthModal();
+    openCommentModal(id);
+  }, [id, user, openAuthModal, openCommentModal]);
 
   return (
     <section className="space-y-8">
@@ -27,7 +36,7 @@ export function TokenArticleComments({ id }: IProps) {
             <span className="ml-2">{`(${commentCount})`}</span>
           )}
         </h2>
-        <Button variant="ghost" onClick={() => onOpen(id)}>
+        <Button variant="ghost" onClick={handleAddComment}>
           <PlusCircle className="mr-2 h-4 w-4" />
           <span className="md:hidden">Add</span>
           <span className="hidden md:inline-block">Leave a comment</span>

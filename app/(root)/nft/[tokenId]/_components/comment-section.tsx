@@ -45,7 +45,7 @@ export function CommentSection({ id }: IProps) {
     toggleFavorite(id);
   }, [id, user, openAuthModal, toggleFavorite]);
 
-  const handleCommentRequest = useCallback(() => {
+  const handleAddComment = useCallback(() => {
     if (!user) return openAuthModal();
     openCommentModal(id);
   }, [id, user, openAuthModal, openCommentModal]);
@@ -69,7 +69,7 @@ export function CommentSection({ id }: IProps) {
             </Button>
           </HoverTip>
           <HoverTip message="Leave a comment" side="top" sideOffset={0}>
-            <Button variant="link" size="sm" onClick={handleCommentRequest}>
+            <Button variant="link" size="sm" onClick={handleAddComment}>
               <MessageSquare className="h-[22px] w-[22px]" />
               <span className="ml-2">{commentCount}</span>
             </Button>
