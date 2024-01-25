@@ -11,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "~/components/ui/dialog";
-import { CommentForm } from "../comment-form";
+import { CommentForm } from "~/components/comment-form";
 
 export function CommentModal() {
   const isMounted = useIsMounted();
@@ -27,9 +27,7 @@ export function CommentModal() {
             Share your thoughts about the NFT by writing a comment below.
           </DialogDescription>
         </DialogHeader>
-        <div className="mx-auto space-x-4">
-          <CommentForm />
-        </div>
+        <CommentForm />
       </DialogContent>
     </Dialog>
   );
