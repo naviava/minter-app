@@ -11,7 +11,7 @@ import { NothingToShow } from "~/components/nothing-to-show";
 import { trpc } from "~/app/_trpc/client";
 
 export default function FavoritesPage() {
-  const { data: favorites, isLoading } = trpc.user.getFavorites.useQuery();
+  const { data: favorites, isLoading } = trpc.favorites.getFavorites.useQuery();
 
   return (
     <PageWrapper>
@@ -25,7 +25,7 @@ export default function FavoritesPage() {
         </div>
       )}
       {!isLoading && (!favorites || !favorites.length) && (
-        <NothingToShow message="No tokens linked to your account yet" />
+        <NothingToShow message="Nothing here yet. Go to the explore section to mark something you like." />
       )}
       <div className="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-6">
         {favorites?.map((fav) => {
