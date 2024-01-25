@@ -79,9 +79,11 @@ export function UploadModal() {
               <Image fill src={URL.createObjectURL(media)} alt="NFT Image" />
             </div>
           )}
-          <div className="line-clamp-3 text-xl font-medium">{title}</div>
+          <div className="line-clamp-3 break-all text-xl font-medium">
+            {title}
+          </div>
         </div>
-        <ScrollArea className="h-72 whitespace-pre-wrap">
+        <ScrollArea className="h-72 grow-0 whitespace-pre-wrap break-all">
           {description}
         </ScrollArea>
         <DialogFooter>
