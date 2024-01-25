@@ -7,6 +7,7 @@ import { TokenArticleHeader } from "./token-article-header";
 import { CommentSection } from "./comment-section";
 
 import { serverClient } from "~/app/_trpc/server-client";
+import { DNA } from "react-loader-spinner";
 
 interface IToken {
   title: string;
@@ -25,7 +26,12 @@ export function TokenArticle({ token }: IProps) {
   });
 
   const data = query.data as IToken;
-  if (!data) return null;
+  if (!data)
+    return (
+      <div className="mt-60 flex items-center justify-center">
+        <DNA />
+      </div>
+    );
 
   return (
     <div className="space-y-8">
