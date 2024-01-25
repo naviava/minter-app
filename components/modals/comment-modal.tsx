@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { useIsMounted } from "~/hooks/use-is-mounted";
 import { useCommentModal } from "~/store/use-comment-modal";
 

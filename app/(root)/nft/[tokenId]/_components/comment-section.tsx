@@ -13,6 +13,7 @@ import { useCommentModal } from "~/store/use-comment-modal";
 import { Button } from "~/components/ui/button";
 import { HoverTip } from "~/components/hover-tip";
 import { FavoriteGradientIcon } from "~/components/nft-card/favorite-gradient-icon";
+import { TokenArticleComments } from "./token-article-comments";
 
 import { trpc } from "~/app/_trpc/client";
 
@@ -28,6 +29,7 @@ export function CommentSection({ id }: IProps) {
   const { data: user } = trpc.user.getAuthProfile.useQuery();
   const { data: isFavorite } = trpc.favorites.isFavorite.useQuery(id);
   const { data: favCount } = trpc.favorites.getFavoriteCount.useQuery(id);
+  const { data: commentCount } = trpc.comment.getCommentCount.useQuery(id);
 
   const utils = trpc.useUtils();
   const { mutate: toggleFavorite } = trpc.favorites.toggleFavorite.useMutation({
@@ -49,7 +51,7 @@ export function CommentSection({ id }: IProps) {
   }, [id, user, openAuthModal, openCommentModal]);
 
   return (
-    <div>
+    <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-x-2">
           <HoverTip
@@ -69,6 +71,7 @@ export function CommentSection({ id }: IProps) {
           <HoverTip message="Leave a comment" side="top" sideOffset={0}>
             <Button variant="link" size="sm" onClick={handleCommentRequest}>
               <MessageSquare className="h-[22px] w-[22px]" />
+              <span className="ml-2">{commentCount}</span>
             </Button>
           </HoverTip>
         </div>
@@ -85,6 +88,7 @@ export function CommentSection({ id }: IProps) {
           </Button>
         </HoverTip>
       </div>
+      <TokenArticleComments id={id} />
     </div>
   );
 }
