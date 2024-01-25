@@ -8,6 +8,7 @@ export const getComments = publicProcedure
     const comments = await db.comment.findMany({
       where: { nftId },
       include: { user: true },
+      orderBy: { createdAt: "desc" },
     });
     return comments;
   });
