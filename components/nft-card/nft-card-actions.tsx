@@ -24,13 +24,12 @@ export function NftCardActions({ id }: IProps) {
 
   const utils = trpc.useUtils();
   const { data: user } = trpc.user.getAuthProfile.useQuery();
-  const { data: isFavorite } = trpc.user.isFavorite.useQuery(id);
+  const { data: isFavorite } = trpc.favorites.isFavorite.useQuery(id);
 
-  const { mutate: toggleFavorite } = trpc.user.toggleFavorite.useMutation({
+  const { mutate: toggleFavorite } = trpc.favorites.toggleFavorite.useMutation({
     onError: ({ message }) => toast.error(message),
     onSuccess: ({ message }) => {
-      utils.user.getFavorites.invalidate();
-      utils.user.isFavorite.invalidate(id);
+      utils.favorites.invalidate();
       toast.success(message);
     },
   });

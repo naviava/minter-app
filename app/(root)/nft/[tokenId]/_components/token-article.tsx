@@ -15,6 +15,7 @@ import { Button } from "~/components/ui/button";
 import { HoverTip } from "~/components/hover-tip";
 import { PageHeading } from "~/components/page-heading";
 import { FavoriteGradientIcon } from "~/components/nft-card/favorite-gradient-icon";
+import { CommentSection } from "./comment-section";
 
 import { trpc } from "~/app/_trpc/client";
 import { serverClient } from "~/app/_trpc/server-client";
@@ -40,12 +41,11 @@ export function TokenArticle({ token }: IProps) {
   });
 
   const utils = trpc.useUtils();
-  const { data: isFavorite } = trpc.user.isFavorite.useQuery(token.id);
-  const { mutate: toggleFavorite } = trpc.user.toggleFavorite.useMutation({
+  const { data: isFavorite } = trpc.favorites.isFavorite.useQuery(token.id);
+  const { mutate: toggleFavorite } = trpc.favorites.toggleFavorite.useMutation({
     onError: ({ message }) => toast.error(message),
     onSuccess: ({ message }) => {
-      utils.user.getFavorites.invalidate();
-      utils.user.isFavorite.invalidate(token.id);
+      utils.favorites.invalidate();
       toast.success(message);
     },
   });
@@ -109,6 +109,7 @@ export function TokenArticle({ token }: IProps) {
         />
       </div>
       <p className="whitespace-pre-wrap">{data.description}</p>
+      <CommentSection id={token.id} />
     </div>
   );
 }
