@@ -2,16 +2,19 @@
 
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 import { Loader, Plus } from "lucide-react";
 import { useMbWallet } from "@mintbase-js/react";
+
 import { Button } from "~/components/ui/button";
+import { trpc } from "~/app/_trpc/client";
 
 export function CreateButton() {
   const router = useRouter();
   const { isConnected, modal } = useMbWallet();
   const [isRouting, setIsRouting] = useState(false);
+
+  const { data: user } = trpc.user.getAuthProfile.useQuery();
 
   const handleClick = useCallback(() => {
     if (!isConnected) {
@@ -20,6 +23,8 @@ export function CreateButton() {
     setIsRouting(true);
     return router.push("/create");
   }, [isConnected, modal, router]);
+
+  if (!user) return null;
 
   return (
     <Button
