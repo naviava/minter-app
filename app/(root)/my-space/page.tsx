@@ -24,7 +24,7 @@ export default function MySpacePage() {
           <DNA />
         </div>
       )}
-      {!isLoading && (!userTokens || !userTokens) && (
+      {!isLoading && (!userTokens || !userTokens.length) && (
         <NothingToShow message="No tokens linked to your account yet" />
       )}
       <div className="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-6">
