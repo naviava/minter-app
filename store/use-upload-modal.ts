@@ -5,6 +5,7 @@ type UploadModalStore = {
   description: string;
   media: File | null;
   isOpen: boolean;
+  isFormDisabled: boolean;
 
   setTitle: (title: string) => void;
   setDescription: (description: string) => void;
@@ -29,12 +30,14 @@ export const useUploadModal = create<UploadModalStore>((set) => ({
   description: "",
   media: null,
   isOpen: false,
+  isFormDisabled: false,
 
   setTitle: (title: string) => set({ title }),
   setDescription: (description: string) => set({ description }),
   setMedia: (media: File) => set({ media }),
   clearMedia: () => set({ media: null }),
-  clearInputs: () => set({ title: "", description: "", media: null }),
+  clearInputs: () =>
+    set({ title: "", description: "", media: null, isFormDisabled: false }),
 
   onClose: () => set({ isOpen: false }),
   onOpen: ({
@@ -45,5 +48,5 @@ export const useUploadModal = create<UploadModalStore>((set) => ({
     title: string;
     description: string;
     media: File;
-  }) => set({ isOpen: true, title, description, media }),
+  }) => set({ isOpen: true, isFormDisabled: true, title, description, media }),
 }));

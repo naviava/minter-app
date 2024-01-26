@@ -1,5 +1,4 @@
 import { db } from "~/lib/db";
-import { TRPCError } from "@trpc/server";
 import { privateProcedure } from "~/server/trpc";
 
 export const getOwnedNft = privateProcedure.query(async ({ ctx }) => {
@@ -18,11 +17,6 @@ export const getOwnedNft = privateProcedure.query(async ({ ctx }) => {
       },
     },
   });
-  if (!userTokens) {
-    throw new TRPCError({
-      code: "NOT_FOUND",
-      message: "User not found",
-    });
-  }
+  if (!userTokens) return [];
   return userTokens.nft;
 });

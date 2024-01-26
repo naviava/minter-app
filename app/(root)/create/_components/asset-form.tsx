@@ -40,7 +40,7 @@ const formSchema = z.object({
 });
 
 export function AssetForm() {
-  const { media, onOpen } = useUploadModal();
+  const { isFormDisabled, media, onOpen } = useUploadModal();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -85,7 +85,7 @@ export function AssetForm() {
                 </div>
               </FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} disabled={isFormDisabled} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -111,6 +111,7 @@ export function AssetForm() {
                 <Textarea
                   {...field}
                   rows={20}
+                  disabled={isFormDisabled}
                   placeholder="Describe this historical event..."
                 />
               </FormControl>
@@ -119,7 +120,12 @@ export function AssetForm() {
           )}
         />
         <div className="mx-auto max-w-xl">
-          <Button type="submit" variant="theme" className="w-full">
+          <Button
+            type="submit"
+            variant="theme"
+            disabled={isFormDisabled}
+            className="w-full"
+          >
             Add to Blockchain
           </Button>
         </div>
