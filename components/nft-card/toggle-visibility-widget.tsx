@@ -27,8 +27,7 @@ export function ToggleVisibilityWidget({ id, isPublished }: IProps) {
       onSuccess: (isPublished) => {
         setIsPublishedState(isPublished);
         utils.nft.invalidate();
-        utils.user.isFavorite.invalidate();
-        utils.user.getFavorites.invalidate();
+        utils.favorites.invalidate();
         if (isPublished) {
           return toast.success("Token is now visible to the public");
         }
