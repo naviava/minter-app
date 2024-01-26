@@ -38,11 +38,10 @@ export function UploadModal() {
   const { mutate: handleLinkNft } = trpc.nft.linkNft.useMutation({
     onError: ({ message }) => toast.error(message),
     onSuccess: () => {
-      onClose();
-      clearInputs();
       utils.nft.invalidate();
       toast.success("NFT Created and linked to your account");
       router.push("/my-space");
+      clearInputs();
     },
   });
 
