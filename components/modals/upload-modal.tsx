@@ -53,14 +53,14 @@ export function UploadModal() {
       const metadata = { title, description, media };
       const uploadResult = await uploadReference(metadata);
       const tokenHref = `https://arweave.net/${uploadResult.id}`;
-      console.log(tokenHref);
       handleLinkNft({ tokenHref, walletId: activeAccountId });
     } catch (error) {
       console.log(error);
     } finally {
+      onClose();
       setIsLoading(false);
     }
-  }, [title, description, media, activeAccountId, handleLinkNft]);
+  }, [title, description, media, activeAccountId, handleLinkNft, onClose]);
 
   if (!isMounted) return null;
   return (
