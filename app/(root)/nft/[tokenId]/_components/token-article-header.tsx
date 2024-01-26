@@ -27,13 +27,14 @@ export function TokenArticleHeader({ id, title, userName }: IProps) {
 
   const utils = trpc.useUtils();
   const { data: isFavorite } = trpc.favorites.isFavorite.useQuery(id);
-  const { mutate: toggleFavorite } = trpc.favorites.toggleFavorite.useMutation({
-    onError: ({ message }) => toast.error(message),
-    onSuccess: ({ message }) => {
-      utils.favorites.invalidate();
-      toast.success(message);
-    },
-  });
+  const { mutate: toggleFavorite, isLoading } =
+    trpc.favorites.toggleFavorite.useMutation({
+      onError: ({ message }) => toast.error(message),
+      onSuccess: ({ message }) => {
+        utils.favorites.invalidate();
+        toast.success(message);
+      },
+    });
 
   const handleToggleFavorite = useCallback(() => {
     if (!user) return openAuthModal();
@@ -55,6 +56,7 @@ export function TokenArticleHeader({ id, title, userName }: IProps) {
           <Button
             variant="link"
             size="sm"
+            disabled={isLoading}
             onClick={handleToggleFavorite}
             className="px-2"
           >

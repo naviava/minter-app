@@ -26,13 +26,14 @@ export function NftCardActions({ id }: IProps) {
   const { data: user } = trpc.user.getAuthProfile.useQuery();
   const { data: isFavorite } = trpc.favorites.isFavorite.useQuery(id);
 
-  const { mutate: toggleFavorite } = trpc.favorites.toggleFavorite.useMutation({
-    onError: ({ message }) => toast.error(message),
-    onSuccess: ({ message }) => {
-      utils.favorites.invalidate();
-      toast.success(message);
-    },
-  });
+  const { mutate: toggleFavorite, isLoading } =
+    trpc.favorites.toggleFavorite.useMutation({
+      onError: ({ message }) => toast.error(message),
+      onSuccess: ({ message }) => {
+        utils.favorites.invalidate();
+        toast.success(message);
+      },
+    });
 
   function handleToggleFavorite() {
     if (!user) return openAuthModal();
@@ -53,11 +54,13 @@ export function NftCardActions({ id }: IProps) {
             !isFavorite && "hover:opacity-70",
           )}
         >
-          {isFavorite ? (
-            <FavoriteGradientIcon />
-          ) : (
-            <RiHeartLine className="h-[22px] w-[22px]" />
-          )}
+          <button disabled={isLoading}>
+            {isFavorite ? (
+              <FavoriteGradientIcon />
+            ) : (
+              <RiHeartLine className="h-[22px] w-[22px]" />
+            )}
+          </button>
         </div>
       </HoverTip>
       <Separator orientation="vertical" className="h-6" />

@@ -32,13 +32,14 @@ export function CommentSection({ id }: IProps) {
   const { data: commentCount } = trpc.comment.getCommentCount.useQuery(id);
 
   const utils = trpc.useUtils();
-  const { mutate: toggleFavorite } = trpc.favorites.toggleFavorite.useMutation({
-    onError: ({ message }) => toast.error(message),
-    onSuccess: ({ message }) => {
-      utils.favorites.invalidate();
-      toast.success(message);
-    },
-  });
+  const { mutate: toggleFavorite, isLoading } =
+    trpc.favorites.toggleFavorite.useMutation({
+      onError: ({ message }) => toast.error(message),
+      onSuccess: ({ message }) => {
+        utils.favorites.invalidate();
+        toast.success(message);
+      },
+    });
 
   const handleToggleFavorite = useCallback(() => {
     if (!user) return openAuthModal();
@@ -59,7 +60,12 @@ export function CommentSection({ id }: IProps) {
             side="top"
             sideOffset={0}
           >
-            <Button variant="link" size="sm" onClick={handleToggleFavorite}>
+            <Button
+              variant="link"
+              size="sm"
+              disabled={isLoading}
+              onClick={handleToggleFavorite}
+            >
               {isFavorite ? (
                 <FavoriteGradientIcon />
               ) : (
