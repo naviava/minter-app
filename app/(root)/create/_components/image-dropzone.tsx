@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import Image from "next/image";
 
 import { useDropzone } from "react-dropzone";
-import { ImageIcon, Trash2 } from "lucide-react";
+import { Download, ImageIcon, Trash2 } from "lucide-react";
 import { useUploadModal } from "~/store/use-upload-modal";
 
 import { Button } from "~/components/ui/button";
@@ -47,15 +47,22 @@ export function ImageDropzone() {
     >
       <input {...getInputProps()} multiple={false} />
       {isDragActive ? (
-        <p className="text-center">Drop here...</p>
+        <div className="flex items-center justify-center">
+          Drop here
+          <Download className="ml-2 h-4 w-4" />
+        </div>
       ) : (
         <>
           {!media ? (
             <div className="flex flex-col items-center justify-center space-y-4 text-muted-foreground">
               <ImageIcon className="h-8 w-8" />
-              <p className="max-w-[75%] text-balance text-center">
-                Drag &apos;n&apos; drop an image file, or click to select a file
-              </p>
+              <div className="flex flex-col items-center gap-y-2">
+                <p className="max-w-[75%] text-balance text-center text-sm">
+                  Drag &apos;n&apos; drop an image file, or click to select a
+                  file
+                </p>
+                <p className="text-xs italic">Recommended: 800x800px</p>
+              </div>
             </div>
           ) : (
             <div className="relative">
