@@ -13,10 +13,11 @@ const font = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "Minter App",
-    template: "%s | Minter App",
+    default: "MintSaga App",
+    template: "%s | MintSaga App",
   },
-  description: "An NFT minter app created for Abstraction Hackathon.",
+  description:
+    "Preserve and share historical events through captivating images, titles, and descriptions on the blockchain.",
   icons: [{ url: "/logo.svg", href: "/logo.svg" }],
 };
 

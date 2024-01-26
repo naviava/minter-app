@@ -30,12 +30,21 @@ export default function LandingPage() {
 
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-y-10">
-      <h1 className="max-w-3xl text-balance text-center text-5xl font-bold leading-normal md:text-6xl md:leading-normal lg:text-7xl lg:leading-normal">
-        You&apos;re one step away from the world of{" "}
-        <span className="bg-gradient-to-r from-red-600 to-indigo-600 bg-clip-text font-extrabold uppercase text-transparent">
-          blockchain
-        </span>
-      </h1>
+      <div className="max-w-3xl space-y-6 text-center">
+        <h1 className="text-balance text-5xl font-extrabold leading-normal md:text-6xl md:leading-normal lg:text-7xl lg:leading-normal">
+          Welcome to{" "}
+          <span className="bg-gradient-to-r from-red-600 to-indigo-600 bg-clip-text font-extrabold uppercase text-transparent">
+            MintSaga
+          </span>
+        </h1>
+        <p className="text-xl font-medium md:text-2xl lg:text-3xl">
+          Where history meets{" "}
+          <span className="bg-gradient-to-r from-red-600 to-indigo-600 bg-clip-text font-extrabold uppercase text-transparent">
+            blockchain
+          </span>
+        </p>
+      </div>
+      <span className="bg-gradient-to-r from-red-600 to-indigo-600 bg-clip-text font-extrabold uppercase text-transparent"></span>
       <Button
         variant="theme"
         disabled={isLoading || isRouting}

@@ -9,7 +9,7 @@ export function Logo() {
       <div className="flex items-center gap-x-2 transition hover:opacity-75">
         <Image src="/logo.svg" alt="Logo" height={30} width={30} />
         <p className="hidden text-lg text-neutral-700 dark:text-neutral-200 md:block">
-          Minter
+          MintSaga
         </p>
       </div>
     </Link>
