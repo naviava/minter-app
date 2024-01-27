@@ -49,10 +49,10 @@ export function AuthModal() {
             <DNA />
           ) : (
             <>
-              <Button variant="outline" onClick={() => handleClick("google")}>
+              {/* <Button variant="outline" onClick={() => handleClick("google")}>
                 <FcGoogle className="mr-2" />
                 Google
-              </Button>
+              </Button> */}
               <Button variant="outline" onClick={() => handleClick("github")}>
                 <FaGithub className="mr-2" />
                 GitHub
