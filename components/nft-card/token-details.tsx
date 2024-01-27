@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 
 interface IProps {
@@ -11,7 +12,7 @@ interface IProps {
 export function TokenDetails({ id, title, media, walletId, isOwner }: IProps) {
   return (
     <>
-      <a href={`/nft/${id}`} target="_blank">
+      <Link href={`/nft/${id}`}>
         <div className="relative mb-4 aspect-square w-full">
           <Image
             fill
@@ -20,7 +21,7 @@ export function TokenDetails({ id, title, media, walletId, isOwner }: IProps) {
             className="rounded-sm object-cover"
           />
         </div>
-      </a>
+      </Link>
       <div className="space-y-2">
         {isOwner && (
           <div className="text-center text-sm text-muted-foreground">
@@ -28,11 +29,11 @@ export function TokenDetails({ id, title, media, walletId, isOwner }: IProps) {
             <p className="font-semibold">{walletId}</p>
           </div>
         )}
-        <a href={`/nft/${id}`} target="_blank">
+        <Link href={`/nft/${id}`}>
           <h3 className="mt-2 line-clamp-1 text-balance break-words text-center font-medium transition hover:underline">
             {title}
           </h3>
-        </a>
+        </Link>
       </div>
     </>
   );
