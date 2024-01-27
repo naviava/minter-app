@@ -4,7 +4,7 @@ MintSaga is an application that leverages blockchain technology to store images 
 
 Here is a short video demonstrating the app's key features:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/_5HMEXtB4iI?si=1-GHZwsMH8EdJsJC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/_5HMEXtB4iI/0.jpg)](https://www.youtube.com/watch?v=_5HMEXtB4iI)
 
 Below are the key features and functionalities of MintSaga:
 
@@ -112,3 +112,5 @@ npm run dev
 ```
 
 This will start the development server, and you can access the app at `http://localhost:3000`. Feel free to optimize and customize the development environment based on your preferences.
+
+Thank you for checking out MintSaga! If you have any questions or feedback, please feel free to reach out to me on [X (Twitter)](https://twitter.com/oldmannav) or [LinkedIn](https://www.linkedin.com/in/navin-avadhani-aa288785/).
