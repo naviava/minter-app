@@ -13,11 +13,11 @@ export function Footer() {
           </a>{" "}
           and{" "}
           <a
-            href="https://near.org/"
+            href="https://arweave.net"
             target="_blank"
             className="bg-gradient-to-r from-red-600 to-indigo-600 bg-clip-text text-sm font-semibold tracking-wider text-transparent"
           >
-            NEAR
+            Arweave
           </a>{" "}
           ❤️
         </p>
